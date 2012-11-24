@@ -18,6 +18,10 @@ static CGFloat PieceViewSize = 64;
 {
     CALayer *layer = [super makeBackingLayer];
     layer.backgroundColor = [[NSColor greenColor] CGColor];
+    
+    NSImage *image = [NSImage imageNamed:@"Emitter"];
+    layer.contents = image;
+    
     return layer;
 }
 

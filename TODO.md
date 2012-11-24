@@ -11,3 +11,11 @@
 ## v0.3
 
 * Add influence
+
+## vN
+
+* Extract model code to model
+* Write model in server language
+* Add game logic timer
+* Add display timer
+* Add more piece types
