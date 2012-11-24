@@ -42,9 +42,46 @@
     NSCAssert(view.layer, @"Should start with a layer");
     view.layer.backgroundColor = [[NSColor blackColor] CGColor];
     
-    [view addSubview:_playfieldViewController.view];
-    [view addSubview:_leftDeckViewController.view];
-    [view addSubview:_rightDeckViewController.view];
+    NSView *playfield = _playfieldViewController.view;
+    [view addSubview:playfield];
+    
+    NSView *leftDeck = _leftDeckViewController.view;
+    [view addSubview:leftDeck];
+    
+    NSView *rightDeck = _leftDeckViewController.view;
+    [view addSubview:rightDeck];
+    
+    NSMutableArray *constraints = [NSMutableArray new];
+    
+    NSDictionary *metrics = @{};
+    NSDictionary *views = NSDictionaryOfVariableBindings(playfield, leftDeck, rightDeck);
+    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[playfield]-|" options:0 metrics:metrics views:views]];
+    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[playfield]" options:0 metrics:metrics views:views]];
+    
+    [constraints addObject:[NSLayoutConstraint constraintWithItem:playfield
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:leftDeck
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1 constant:0]];
+     [constraints addObject:[NSLayoutConstraint constraintWithItem:playfield
+                                                         attribute:NSLayoutAttributeTrailing
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:rightDeck
+                                                         attribute:NSLayoutAttributeTrailing
+                                                        multiplier:1 constant:0]];
+    
+    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[playfield]-[leftDeck]-|" options:0 metrics:metrics views:views]];
+    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[playfield]-[rightDeck]-|" options:0 metrics:metrics views:views]];
+
+    [view addConstraints:constraints];
+    
+    [view layout];
+    NSLog(@"view %d", view.hasAmbiguousLayout);
+    if ([view hasAmbiguousLayout])
+        [view exerciseAmbiguityInLayout];
+    
+    [window center];
 }
 
 #pragma mark - NSWindowController subclass
