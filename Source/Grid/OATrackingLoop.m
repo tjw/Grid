@@ -49,28 +49,6 @@ static BOOL OATrackingLoopDebug = YES;
     return nil;
 }
 
-@synthesize debug = _debug;
-@synthesize disablesAnimation = _disablesAnimation;
-@synthesize view = _view;
-@synthesize mouseDownEvent = _mouseDownEvent;
-@synthesize insideHysteresisRect = _insideHysteresisRect;
-@synthesize hysteresisSize = _hysteresisSize;
-@synthesize insideVisibleRectChanged = _insideVisibleRectChanged;
-
-@synthesize initialMouseDownPointInView = _initialMouseDownPointInView;
-@synthesize currentMouseDraggedPointInView = _currentMouseDraggedPointInView;
-@synthesize currentMouseDraggedPointInWindow = _currentMouseDraggedPointInWindow;
-
-@synthesize modifierFlags = _modifierFlags;
-
-@synthesize hysteresisExit = _hysteresisExit;
-@synthesize insideVisibleRect = _insideVisibleRect;
-@synthesize modifierFlagsChanged = _modifierFlagsChanged;
-@synthesize shouldAutoscroll = _shouldAutoscroll;
-@synthesize dragged = _dragged;
-@synthesize longPress = _longPress;
-@synthesize up = _up;
-
 // This is usable if the tracking operation doesn't move the view itself.
 - (NSSize)draggedOffsetInView;
 {
