@@ -47,8 +47,11 @@
     [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
     [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
 
-    for (PieceView *pieceView in view.pieceViews)
+    for (PieceView *pieceView in view.pieceViews) {
         pieceView.delegate = self;
+        pieceView.wantsLayer = YES; // otherwise we don't get our layer until later
+        pieceView.layer.contents = [NSImage imageNamed:@"Emitter"];
+    }
     
     self.view = view;
 }
@@ -87,6 +90,7 @@
         [parentView addSubview:draggingView positioned:NSWindowAbove relativeTo:nil];
         
         draggingView.layer.backgroundColor = [[NSColor yellowColor] CGColor];
+        draggingView.layer.contents = _pieceView.layer.contents;
 
         xConstraint = [NSLayoutConstraint constraintWithItem:draggingView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:parentView attribute:NSLayoutAttributeLeft multiplier:1 constant:0];
         yConstraint = [NSLayoutConstraint constraintWithItem:draggingView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:parentView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
