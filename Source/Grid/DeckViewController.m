@@ -13,6 +13,10 @@
 #import "PieceViewDelegate.h"
 #import "OATrackingLoop.h"
 
+@interface NSView ()
+- (NSString *)_subtreeDescription;
+@end
+
 @interface DeckViewController () <PieceViewDelegate>
 
 @end
@@ -51,15 +55,63 @@
 
 #pragma mark - PieceViewDelegate
 
-- (void)pieceView:(PieceView *)pieceView clicked:(NSEvent *)mouseDown;
+- (void)pieceView:(PieceView *)_pieceView clicked:(NSEvent *)mouseDown;
 {
-    OATrackingLoop *trackingLoop = [pieceView trackingLoopForMouseDown:mouseDown];
+    // TODO: Better way for the deck to get this.
+    NSView *parentView = self.view.window.contentView;
+
+    OATrackingLoop *trackingLoop = [parentView trackingLoopForMouseDown:mouseDown];
+    trackingLoop.disablesAnimation = NO; // Without this, my layer-backed view doesn't update at all.
+    
+    __block PieceView *draggingView;
+    __block NSLayoutConstraint *xConstraint;
+    __block NSLayoutConstraint *yConstraint;
+    __block NSPoint initialPoint;
+    
+    __weak OATrackingLoop *_trackingLoop = trackingLoop;
+    
+    void (^updateDrag)(void) = ^{
+        NSSize offset = [_trackingLoop draggedOffsetInView:parentView];
+        NSLog(@"offset = %@", NSStringFromSize(offset));
+        NSLog(@"initialPoint = %@", NSStringFromPoint(initialPoint));
+        xConstraint.constant = initialPoint.x + offset.width;
+        yConstraint.constant = initialPoint.y - offset.height;
+        
+//        NSLog(@"draggingView.frame = %@", NSStringFromRect(draggingView.frame));
+//        NSLog(@"draggingView.visibleRect = %@", NSStringFromRect(draggingView.visibleRect));
+        
+//        NSLog(@"parentView = %@", [parentView _subtreeDescription]);
+        draggingView.layer.backgroundColor = [[NSColor yellowColor] CGColor];
+    };
+    
     trackingLoop.hysteresisSize = 4;
     trackingLoop.hysteresisExit = ^(OATrackingLoopExitPoint exitPoint){
-        NSLog(@"exit");
+        draggingView = [PieceView new];
+//        NSLog(@"draggingView = %@", draggingView);
+        draggingView.translatesAutoresizingMaskIntoConstraints = NO;
+        [draggingView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
+        [draggingView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
+        [parentView addSubview:draggingView positioned:NSWindowAbove relativeTo:nil];
+        
+        draggingView.layer.backgroundColor = [[NSColor yellowColor] CGColor];
+
+        xConstraint = [NSLayoutConstraint constraintWithItem:draggingView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:parentView attribute:NSLayoutAttributeLeft multiplier:1 constant:0];
+        yConstraint = [NSLayoutConstraint constraintWithItem:draggingView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:parentView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+        
+        initialPoint = [_trackingLoop initialMouseDownPointInView];
+        updateDrag();
+        
+        [parentView addConstraint:xConstraint];
+        [parentView addConstraint:yConstraint];
     };
     trackingLoop.up = ^{
-        NSLog(@"up");
+        [draggingView removeFromSuperview];
+        [parentView removeConstraint:xConstraint];
+        [parentView removeConstraint:yConstraint];
+//        NSLog(@"up");
+    };
+    trackingLoop.dragged = ^{
+        updateDrag();
     };
     [trackingLoop run];
 }
