@@ -59,7 +59,9 @@
 {
     // TODO: Better way for the deck to get this.
     NSView *parentView = self.view.window.contentView;
-
+    
+    NSRect originalPieceFrameInParentView = [parentView convertRect:_pieceView.bounds fromView:_pieceView];
+    
     OATrackingLoop *trackingLoop = [parentView trackingLoopForMouseDown:mouseDown];
     trackingLoop.disablesAnimation = NO; // Without this, my layer-backed view doesn't update at all.
     
@@ -71,23 +73,14 @@
     __weak OATrackingLoop *_trackingLoop = trackingLoop;
     
     void (^updateDrag)(void) = ^{
-        NSSize offset = [_trackingLoop draggedOffsetInView:parentView];
-        NSLog(@"offset = %@", NSStringFromSize(offset));
-        NSLog(@"initialPoint = %@", NSStringFromPoint(initialPoint));
-        xConstraint.constant = initialPoint.x + offset.width;
-        yConstraint.constant = initialPoint.y - offset.height;
-        
-//        NSLog(@"draggingView.frame = %@", NSStringFromRect(draggingView.frame));
-//        NSLog(@"draggingView.visibleRect = %@", NSStringFromRect(draggingView.visibleRect));
-        
-//        NSLog(@"parentView = %@", [parentView _subtreeDescription]);
-        draggingView.layer.backgroundColor = [[NSColor yellowColor] CGColor];
+        NSSize offset = [_trackingLoop draggedOffsetInView];
+        xConstraint.constant = originalPieceFrameInParentView.origin.x + offset.width;
+        yConstraint.constant = -(originalPieceFrameInParentView.origin.y + offset.height); // TODO: Why does this need negation?
     };
     
     trackingLoop.hysteresisSize = 4;
     trackingLoop.hysteresisExit = ^(OATrackingLoopExitPoint exitPoint){
         draggingView = [PieceView new];
-//        NSLog(@"draggingView = %@", draggingView);
         draggingView.translatesAutoresizingMaskIntoConstraints = NO;
         [draggingView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
         [draggingView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
@@ -108,7 +101,6 @@
         [draggingView removeFromSuperview];
         [parentView removeConstraint:xConstraint];
         [parentView removeConstraint:yConstraint];
-//        NSLog(@"up");
     };
     trackingLoop.dragged = ^{
         updateDrag();
