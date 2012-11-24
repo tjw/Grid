@@ -6,15 +6,13 @@
 
 ## v0.2
 
-* Add particles
-
-## v0.3
-
-* Add influence
+* Extract model code to model
+* Add drop support to change model
 
 ## vN
 
-* Extract model code to model
+* Add particles
+* Add influence
 * Write model in server language
 * Add game logic timer
 * Add display timer
