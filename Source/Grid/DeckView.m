@@ -14,9 +14,6 @@ static const NSUInteger PiecesInDeck = 5;
 static const CGFloat EdgeToPiecePadding = 8;
 
 @implementation DeckView
-{
-    NSArray *_pieceViews;
-}
 
 - (id)initWithFrame:(NSRect)frame
 {

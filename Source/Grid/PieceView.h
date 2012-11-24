@@ -8,6 +8,8 @@
 
 #import <AppKit/NSView.h>
 
-@interface PieceView : NSView
+@protocol PieceViewDelegate;
 
+@interface PieceView : NSView
+@property(nonatomic,weak) id <PieceViewDelegate> delegate;
 @end

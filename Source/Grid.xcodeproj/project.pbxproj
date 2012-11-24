@@ -54,6 +54,7 @@
 		34F0809E166097AB00F3FB85 /* Emitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Emitter.png; sourceTree = "<group>"; };
 		34F080A016609A8D00F3FB85 /* OATrackingLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OATrackingLoop.h; sourceTree = "<group>"; };
 		34F080A116609A8D00F3FB85 /* OATrackingLoop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OATrackingLoop.m; sourceTree = "<group>"; };
+		34F080A316609F5A00F3FB85 /* PieceViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieceViewDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +181,7 @@
 			children = (
 				34F080971660810400F3FB85 /* PieceView.h */,
 				34F080981660810400F3FB85 /* PieceView.m */,
+				34F080A316609F5A00F3FB85 /* PieceViewDelegate.h */,
 			);
 			name = Square;
 			sourceTree = "<group>";

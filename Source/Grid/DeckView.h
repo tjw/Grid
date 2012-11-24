@@ -6,8 +6,10 @@
 //  Copyright (c) 2012 Cocoatoa. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <AppKit/NSView.h>
 
 @interface DeckView : NSView
+
+@property(nonatomic,readonly) NSArray *pieceViews;
 
 @end

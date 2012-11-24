@@ -8,9 +8,24 @@
 
 #import "PieceView.h"
 
+#import "PieceViewDelegate.h"
+
 @implementation PieceView
 
 static CGFloat PieceViewSize = 64;
+
+@synthesize delegate = _weak_delegate;
+
+#pragma mark - NSResponder subclass
+
+- (void)mouseDown:(NSEvent *)theEvent;
+{
+    id <PieceViewDelegate> delegate = _weak_delegate;
+    if (!delegate)
+        return;
+    if ([delegate respondsToSelector:@selector(pieceView:clicked:)])
+        [delegate pieceView:self clicked:theEvent];
+}
 
 #pragma mark - NSView subclass
 
