@@ -48,7 +48,7 @@
     NSView *leftDeck = _leftDeckViewController.view;
     [view addSubview:leftDeck];
     
-    NSView *rightDeck = _leftDeckViewController.view;
+    NSView *rightDeck = _rightDeckViewController.view;
     [view addSubview:rightDeck];
     
     NSMutableArray *constraints = [NSMutableArray new];
@@ -76,12 +76,22 @@
 
     [view addConstraints:constraints];
     
+    [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
+    [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
+
     [view layout];
-    NSLog(@"view %d", view.hasAmbiguousLayout);
-    if ([view hasAmbiguousLayout])
-        [view exerciseAmbiguityInLayout];
+    
+    leftDeck.layer.backgroundColor = [[NSColor redColor] CGColor];
+    rightDeck.layer.backgroundColor = [[NSColor blueColor] CGColor];
     
     [window center];
+}
+
+- (IBAction)exerciseAmbiguity:(id)sender;
+{
+    NSView *view = self.window.contentView;
+    if ([view hasAmbiguousLayout])
+        [view exerciseAmbiguityInLayout];
 }
 
 #pragma mark - NSWindowController subclass

@@ -30,6 +30,8 @@ static const CGFloat EdgeToPiecePadding = 8;
     for (NSUInteger pieceIndex = 0; pieceIndex < PiecesInDeck; pieceIndex++) {
         PieceView *pieceView = [[PieceView alloc] init];
         pieceView.translatesAutoresizingMaskIntoConstraints = NO;
+        [pieceView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
+        [pieceView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
         [pieceViews addObject:pieceView];
         [self addSubview:pieceView];
         

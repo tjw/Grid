@@ -29,7 +29,12 @@
 - (void)loadView;
 {
     PlayfieldView *view = [[PlayfieldView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    
     view.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
+    [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
+
     self.view = view;
 }
 

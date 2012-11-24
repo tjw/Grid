@@ -11,7 +11,7 @@
 #import "PieceView.h"
 
 // this will get moved into a model layer at some point
-static const NSUInteger PiecesPerPlayfieldWidth = 12;
+static const NSUInteger PiecesPerPlayfieldWidth = 14;
 static const NSUInteger PiecesPerPlayfieldHeight = 9;
 
 static const CGFloat EdgeToPiecePadding = 8;
@@ -35,6 +35,9 @@ static const CGFloat EdgeToPiecePadding = 8;
         for (NSUInteger pieceIndexX = 0; pieceIndexX < PiecesPerPlayfieldWidth; pieceIndexX++) {
             PieceView *pieceView = [[PieceView alloc] init];
             pieceView.translatesAutoresizingMaskIntoConstraints = NO;
+            [pieceView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
+            [pieceView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
+
             [pieceViews addObject:pieceView];
             [self addSubview:pieceView];
             
