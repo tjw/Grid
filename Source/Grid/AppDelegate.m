@@ -17,6 +17,10 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{
+     @"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints" : @YES
+     }];
+
     _windowController = [[GridWindowController alloc] init];
     [_windowController showWindow:self];
 }

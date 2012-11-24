@@ -39,6 +39,9 @@
     window.title = @"Grid";
     
     NSView *view = window.contentView;
+    NSCAssert(view.layer, @"Should start with a layer");
+    view.layer.backgroundColor = [[NSColor blackColor] CGColor];
+    
     [view addSubview:_playfieldViewController.view];
     [view addSubview:_leftDeckViewController.view];
     [view addSubview:_rightDeckViewController.view];

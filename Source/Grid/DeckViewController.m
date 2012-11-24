@@ -18,10 +18,8 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Initialization code here.
-    }
+    if (!(self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
+        return nil;
     
     return self;
 }
@@ -31,6 +29,7 @@
 - (void)loadView;
 {
     DeckView *view = [[DeckView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    view.translatesAutoresizingMaskIntoConstraints = NO;
     self.view = view;
 }
 

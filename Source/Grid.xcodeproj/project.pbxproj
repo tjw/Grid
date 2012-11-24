@@ -19,6 +19,7 @@
 		34F0808C16607AE600F3FB85 /* DeckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0808B16607AE600F3FB85 /* DeckViewController.m */; };
 		34F0809316607C5E00F3FB85 /* PlayfieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0809216607C5E00F3FB85 /* PlayfieldView.m */; };
 		34F0809616607C9100F3FB85 /* DeckView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0809516607C9100F3FB85 /* DeckView.m */; };
+		34F080991660810400F3FB85 /* PieceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F080981660810400F3FB85 /* PieceView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,8 @@
 		34F0809216607C5E00F3FB85 /* PlayfieldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayfieldView.m; sourceTree = "<group>"; };
 		34F0809416607C9100F3FB85 /* DeckView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckView.h; sourceTree = "<group>"; };
 		34F0809516607C9100F3FB85 /* DeckView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckView.m; sourceTree = "<group>"; };
+		34F080971660810400F3FB85 /* PieceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieceView.h; sourceTree = "<group>"; };
+		34F080981660810400F3FB85 /* PieceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieceView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +106,7 @@
 				34F0808F16607C0D00F3FB85 /* Window */,
 				34F0808D16607BFC00F3FB85 /* Playfield */,
 				34F0808E16607C0200F3FB85 /* Deck */,
+				34F0809A1660810C00F3FB85 /* Square */,
 				349EBCE81660793200DC45D3 /* Supporting Files */,
 			);
 			path = Grid;
@@ -160,6 +164,15 @@
 				349EBCF61660793200DC45D3 /* MainMenu.xib */,
 			);
 			name = App;
+			sourceTree = "<group>";
+		};
+		34F0809A1660810C00F3FB85 /* Square */ = {
+			isa = PBXGroup;
+			children = (
+				34F080971660810400F3FB85 /* PieceView.h */,
+				34F080981660810400F3FB85 /* PieceView.m */,
+			);
+			name = Square;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,6 +247,7 @@
 				34F0808C16607AE600F3FB85 /* DeckViewController.m in Sources */,
 				34F0809316607C5E00F3FB85 /* PlayfieldView.m in Sources */,
 				34F0809616607C9100F3FB85 /* DeckView.m in Sources */,
+				34F080991660810400F3FB85 /* PieceView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
