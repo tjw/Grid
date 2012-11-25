@@ -10,4 +10,8 @@
 
 @interface PlayfieldView : NSView
 
+- (void)resizeToWidth:(NSUInteger)width height:(NSUInteger)height;
+@property(nonatomic,readonly) NSUInteger width;
+@property(nonatomic,readonly) NSUInteger height;
+
 @end

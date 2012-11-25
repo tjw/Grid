@@ -22,6 +22,7 @@
 		34F080991660810400F3FB85 /* PieceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F080981660810400F3FB85 /* PieceView.m */; };
 		34F0809F166097AB00F3FB85 /* Emitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F0809E166097AB00F3FB85 /* Emitter.png */; };
 		34F080A216609A8D00F3FB85 /* OATrackingLoop.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F080A116609A8D00F3FB85 /* OATrackingLoop.m */; };
+		34F080A71662A38100F3FB85 /* Playfield.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F080A61662A38100F3FB85 /* Playfield.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,8 @@
 		34F080A016609A8D00F3FB85 /* OATrackingLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OATrackingLoop.h; sourceTree = "<group>"; };
 		34F080A116609A8D00F3FB85 /* OATrackingLoop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OATrackingLoop.m; sourceTree = "<group>"; };
 		34F080A316609F5A00F3FB85 /* PieceViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieceViewDelegate.h; sourceTree = "<group>"; };
+		34F080A51662A38100F3FB85 /* Playfield.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Playfield.h; sourceTree = "<group>"; };
+		34F080A61662A38100F3FB85 /* Playfield.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Playfield.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				349EBCE71660793200DC45D3 /* Source */,
+				34F080A41662A32700F3FB85 /* Model */,
 				34F0809D166097AB00F3FB85 /* Images */,
 				349EBCE01660793200DC45D3 /* Frameworks */,
 				349EBCDE1660793200DC45D3 /* Products */,
@@ -194,6 +198,15 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		34F080A41662A32700F3FB85 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				34F080A51662A38100F3FB85 /* Playfield.h */,
+				34F080A61662A38100F3FB85 /* Playfield.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -269,6 +282,7 @@
 				34F0809616607C9100F3FB85 /* DeckView.m in Sources */,
 				34F080991660810400F3FB85 /* PieceView.m in Sources */,
 				34F080A216609A8D00F3FB85 /* OATrackingLoop.m in Sources */,
+				34F080A71662A38100F3FB85 /* Playfield.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

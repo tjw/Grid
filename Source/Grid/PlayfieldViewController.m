@@ -9,9 +9,10 @@
 #import "PlayfieldViewController.h"
 
 #import "PlayfieldView.h"
+#import "Playfield.h"
 
 @interface PlayfieldViewController ()
-
+@property(nonatomic) Playfield *playfield;
 @end
 
 @implementation PlayfieldViewController
@@ -20,6 +21,8 @@
 {
     if (!(self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
         return nil;
+    
+    _playfield = [[Playfield alloc] init];
     
     return self;
 }
@@ -36,6 +39,8 @@
     [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
     [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
 
+    [view resizeToWidth:_playfield.width height:_playfield.height];
+    
     self.view = view;
 }
 

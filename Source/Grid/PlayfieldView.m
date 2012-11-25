@@ -10,51 +10,61 @@
 
 #import "PieceView.h"
 
-// this will get moved into a model layer at some point
-static const NSUInteger PiecesPerPlayfieldWidth = 14;
-static const NSUInteger PiecesPerPlayfieldHeight = 9;
-
 static const CGFloat EdgeToPiecePadding = 8;
 
 @implementation PlayfieldView
 {
+    NSArray *_constraints;
     NSArray *_pieceViews;
 }
 
-#pragma mark - NSView subclass
+#pragma mark - API
 
-- (id)initWithFrame:(NSRect)frame
+- (void)resizeToWidth:(NSUInteger)width height:(NSUInteger)height;
 {
-    if (!(self = [super initWithFrame:frame]))
-        return nil;
+    if (_width == width && _height == height)
+        return;
     
+    _width = width;
+    _height = height;
+    
+    if (_constraints) {
+        [self removeConstraints:_constraints];
+        _constraints = nil;
+    }
+
     NSMutableArray *pieceViews = [NSMutableArray new];
     NSMutableArray *contraints = [NSMutableArray new];
     
-    for (NSUInteger pieceIndexY = 0; pieceIndexY < PiecesPerPlayfieldHeight; pieceIndexY++) {
-        for (NSUInteger pieceIndexX = 0; pieceIndexX < PiecesPerPlayfieldWidth; pieceIndexX++) {
+    if (_constraints) {
+        [self removeConstraints:_constraints];
+        _constraints = nil;
+    }
+    
+    for (NSUInteger pieceIndexY = 0; pieceIndexY < _height; pieceIndexY++) {
+        for (NSUInteger pieceIndexX = 0; pieceIndexX < _width; pieceIndexX++) {
             PieceView *pieceView = [[PieceView alloc] init];
             pieceView.translatesAutoresizingMaskIntoConstraints = NO;
             [pieceView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
             [pieceView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
-
+            
             [pieceViews addObject:pieceView];
             [self addSubview:pieceView];
             
             NSMutableDictionary *views = [NSMutableDictionary dictionaryWithObject:pieceView forKey:@"piece"];
             PieceView *before;
             if (pieceIndexX > 0) {
-                before = pieceViews[pieceIndexY * PiecesPerPlayfieldWidth + (pieceIndexX - 1)];
+                before = pieceViews[pieceIndexY * _width + (pieceIndexX - 1)];
                 views[@"before"] = before;
             }
             PieceView *above;
             if (pieceIndexY > 0) {
-                above = pieceViews[(pieceIndexY - 1) * PiecesPerPlayfieldWidth + pieceIndexX];
+                above = pieceViews[(pieceIndexY - 1) * _width + pieceIndexX];
                 views[@"above"] = above;
             }
-
+            
             NSDictionary *metrics = @{@"padding" : @(EdgeToPiecePadding)};
-        
+            
             if (before) {
                 [contraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[before]-(padding)-[piece]" options:0 metrics:metrics views:views]];
             } else {
@@ -66,11 +76,11 @@ static const CGFloat EdgeToPiecePadding = 8;
             } else {
                 [contraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(padding)-[piece]" options:0 metrics:metrics views:views]];
             }
-
-            if (pieceIndexX == PiecesPerPlayfieldWidth - 1) {
+            
+            if (pieceIndexX == _width - 1) {
                 [contraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[piece]-(padding)-|" options:0 metrics:metrics views:views]];
             }
-            if (pieceIndexY == PiecesPerPlayfieldHeight - 1) {
+            if (pieceIndexY == _height - 1) {
                 [contraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[piece]-(padding)-|" options:0 metrics:metrics views:views]];
             }
         }
@@ -78,9 +88,9 @@ static const CGFloat EdgeToPiecePadding = 8;
     _pieceViews = [pieceViews copy];
     
     [self addConstraints:contraints];
-    
-    return self;
 }
+
+#pragma mark - NSView subclass
 
 - (CALayer *)makeBackingLayer;
 {
