@@ -10,6 +10,7 @@
 
 #import "PlayfieldViewController.h"
 #import "DeckViewController.h"
+#import "Game.h"
 
 @interface GridWindowController ()
 @property(nonatomic,readonly) PlayfieldViewController *playfieldViewController;
@@ -30,6 +31,14 @@
     
     return self;
 }
+
+- (void)setGame:(Game *)game;
+{
+    _game = game;
+    _playfieldViewController.playfield = game.playfield;
+}
+
+#pragma mark - NSWindowController subclass
 
 - (void)windowDidLoad
 {
@@ -84,21 +93,23 @@
     leftDeck.layer.backgroundColor = [[NSColor redColor] CGColor];
     rightDeck.layer.backgroundColor = [[NSColor blueColor] CGColor];
     
+    _playfieldViewController.playfield = _game.playfield;
+    
     [window center];
 }
+
+- (NSString *)windowNibName;
+{
+    return NSStringFromClass([self class]);
+}
+
+#pragma mark - Private
 
 - (IBAction)exerciseAmbiguity:(id)sender;
 {
     NSView *view = self.window.contentView;
     if ([view hasAmbiguousLayout])
         [view exerciseAmbiguityInLayout];
-}
-
-#pragma mark - NSWindowController subclass
-
-- (NSString *)windowNibName;
-{
-    return NSStringFromClass([self class]);
 }
 
 @end

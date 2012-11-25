@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 #import "GridWindowController.h"
+#import "Game.h"
 
 @implementation AppDelegate
 {
@@ -21,7 +22,11 @@
      @"NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints" : @YES
      }];
 
+    Game *game = [[Game alloc] init];
+
     _windowController = [[GridWindowController alloc] init];
+    _windowController.game = game;
+    
     [_windowController showWindow:self];
 }
 

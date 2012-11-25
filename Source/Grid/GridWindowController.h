@@ -8,6 +8,10 @@
 
 #import <AppKit/NSWindowController.h>
 
+@class Game;
+
 @interface GridWindowController : NSWindowController
+
+@property(nonatomic,strong) Game *game;
 
 @end

@@ -23,6 +23,8 @@
 		34F0809F166097AB00F3FB85 /* Emitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F0809E166097AB00F3FB85 /* Emitter.png */; };
 		34F080A216609A8D00F3FB85 /* OATrackingLoop.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F080A116609A8D00F3FB85 /* OATrackingLoop.m */; };
 		34F080A71662A38100F3FB85 /* Playfield.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F080A61662A38100F3FB85 /* Playfield.m */; };
+		34F080AA1662A6BC00F3FB85 /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F080A91662A6BC00F3FB85 /* Game.m */; };
+		34F080AD1662A82E00F3FB85 /* OUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F080AC1662A82E00F3FB85 /* OUIViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +60,10 @@
 		34F080A316609F5A00F3FB85 /* PieceViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieceViewDelegate.h; sourceTree = "<group>"; };
 		34F080A51662A38100F3FB85 /* Playfield.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Playfield.h; sourceTree = "<group>"; };
 		34F080A61662A38100F3FB85 /* Playfield.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Playfield.m; sourceTree = "<group>"; };
+		34F080A81662A6BC00F3FB85 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		34F080A91662A6BC00F3FB85 /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Game.m; sourceTree = "<group>"; };
+		34F080AB1662A82E00F3FB85 /* OUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OUIViewController.h; sourceTree = "<group>"; };
+		34F080AC1662A82E00F3FB85 /* OUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OUIViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +140,8 @@
 				349EBCF01660793200DC45D3 /* Credits.rtf */,
 				34F080A016609A8D00F3FB85 /* OATrackingLoop.h */,
 				34F080A116609A8D00F3FB85 /* OATrackingLoop.m */,
+				34F080AB1662A82E00F3FB85 /* OUIViewController.h */,
+				34F080AC1662A82E00F3FB85 /* OUIViewController.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -203,6 +211,8 @@
 			children = (
 				34F080A51662A38100F3FB85 /* Playfield.h */,
 				34F080A61662A38100F3FB85 /* Playfield.m */,
+				34F080A81662A6BC00F3FB85 /* Game.h */,
+				34F080A91662A6BC00F3FB85 /* Game.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -283,6 +293,8 @@
 				34F080991660810400F3FB85 /* PieceView.m in Sources */,
 				34F080A216609A8D00F3FB85 /* OATrackingLoop.m in Sources */,
 				34F080A71662A38100F3FB85 /* Playfield.m in Sources */,
+				34F080AA1662A6BC00F3FB85 /* Game.m in Sources */,
+				34F080AD1662A82E00F3FB85 /* OUIViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

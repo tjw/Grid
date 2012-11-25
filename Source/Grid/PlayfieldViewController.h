@@ -6,8 +6,12 @@
 //  Copyright (c) 2012 Cocoatoa. All rights reserved.
 //
 
-#import <AppKit/NSViewController.h>
+#import "OUIViewController.h"
 
-@interface PlayfieldViewController : NSViewController
+@class Playfield;
+
+@interface PlayfieldViewController : OUIViewController
+
+@property(nonatomic,strong) Playfield *playfield;
 
 @end

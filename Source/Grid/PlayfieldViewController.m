@@ -12,19 +12,21 @@
 #import "Playfield.h"
 
 @interface PlayfieldViewController ()
-@property(nonatomic) Playfield *playfield;
 @end
 
 @implementation PlayfieldViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (void)setPlayfield:(Playfield *)playfield;
 {
-    if (!(self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
-        return nil;
+    if (_playfield == playfield)
+        return;
     
-    _playfield = [[Playfield alloc] init];
+    _playfield = playfield;
     
-    return self;
+    if ([self isViewLoaded]) {
+        PlayfieldView *view = (PlayfieldView *)self.view;
+        [view resizeToWidth:_playfield.width height:_playfield.height];
+    }
 }
 
 #pragma mark - NSViewController subclass
@@ -39,7 +41,8 @@
     [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
     [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
 
-    [view resizeToWidth:_playfield.width height:_playfield.height];
+    if (_playfield)
+        [view resizeToWidth:_playfield.width height:_playfield.height];
     
     self.view = view;
 }
