@@ -1,18 +1,13 @@
 //
-//  Unit.m
+//  Deck.h
 //  Grid
 //
 //  Created by Timothy J. Wood on 11/28/12.
 //  Copyright (c) 2012 Cocoatoa. All rights reserved.
 //
 
-#import "Unit.h"
+#import <Foundation/Foundation.h>
 
-@implementation Unit
-
-- (NSString *)imageName;
-{
-    return @"Emitter";
-}
-
+@interface Deck : NSObject
+@property(nonatomic,readonly) NSArray *squares;
 @end

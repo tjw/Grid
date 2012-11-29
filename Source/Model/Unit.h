@@ -12,4 +12,5 @@
 
 @interface Unit : NSObject
 @property(nonatomic) Player *owner;
+@property(nonatomic,readonly) NSString *imageName;
 @end

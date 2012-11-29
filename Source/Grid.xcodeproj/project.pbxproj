@@ -10,6 +10,7 @@
 		34549DD416671F7800C94097 /* Unit.m in Sources */ = {isa = PBXBuildFile; fileRef = 34549DD316671F7800C94097 /* Unit.m */; };
 		34549DD816671FA300C94097 /* Square.m in Sources */ = {isa = PBXBuildFile; fileRef = 34549DD716671FA300C94097 /* Square.m */; };
 		34549DDB16671FCC00C94097 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 34549DDA16671FCC00C94097 /* Player.m */; };
+		34549DDE16672BF900C94097 /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = 34549DDD16672BF900C94097 /* Deck.m */; };
 		349EBCE21660793200DC45D3 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 349EBCE11660793200DC45D3 /* Cocoa.framework */; };
 		349EBCEC1660793200DC45D3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 349EBCEA1660793200DC45D3 /* InfoPlist.strings */; };
 		349EBCEE1660793200DC45D3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 349EBCED1660793200DC45D3 /* main.m */; };
@@ -37,6 +38,8 @@
 		34549DD716671FA300C94097 /* Square.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Square.m; sourceTree = "<group>"; };
 		34549DD916671FCC00C94097 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		34549DDA16671FCC00C94097 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
+		34549DDC16672BF900C94097 /* Deck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deck.h; sourceTree = "<group>"; };
+		34549DDD16672BF900C94097 /* Deck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Deck.m; sourceTree = "<group>"; };
 		349EBCDD1660793200DC45D3 /* Grid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		349EBCE11660793200DC45D3 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		349EBCE41660793200DC45D3 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -228,6 +231,8 @@
 				34549DD316671F7800C94097 /* Unit.m */,
 				34549DD916671FCC00C94097 /* Player.h */,
 				34549DDA16671FCC00C94097 /* Player.m */,
+				34549DDC16672BF900C94097 /* Deck.h */,
+				34549DDD16672BF900C94097 /* Deck.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -313,6 +318,7 @@
 				34549DD416671F7800C94097 /* Unit.m in Sources */,
 				34549DD816671FA300C94097 /* Square.m in Sources */,
 				34549DDB16671FCC00C94097 /* Player.m in Sources */,
+				34549DDE16672BF900C94097 /* Deck.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

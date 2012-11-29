@@ -10,52 +10,49 @@
 
 #import "SquareView.h"
 
-static const NSUInteger PiecesInDeck = 5;
 static const CGFloat EdgeToPiecePadding = 8;
+
+@interface DeckView ()
+@property(nonatomic,readonly) NSArray *squareViews;
+@property(nonatomic,readonly) NSArray *squareViewConstraints;
+@end
 
 @implementation DeckView
 
-- (id)initWithFrame:(NSRect)frame
+- (NSUInteger)squareCount;
 {
-    if (!(self = [super initWithFrame:frame]))
-        return nil;
+    return [_squareViews count];
+}
+
+- (void)setSquareCount:(NSUInteger)squareCount;
+{
+    if ([_squareViews count] == squareCount)
+        return;
+        
+    if (_squareViewConstraints) {
+        [self removeConstraints:_squareViewConstraints];
+        _squareViewConstraints = nil;
+    }
     
     NSMutableArray *squareViews = [NSMutableArray new];
-    NSMutableArray *contraints = [NSMutableArray new];
-    
-    SquareView *previousSquareView;
-    for (NSUInteger pieceIndex = 0; pieceIndex < PiecesInDeck; pieceIndex++) {
-        SquareView *squareView = [[SquareView alloc] init];
-        squareView.translatesAutoresizingMaskIntoConstraints = NO;
-        [squareView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
-        [squareView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
-        [squareViews addObject:squareView];
-        [self addSubview:squareView];
+    for (NSUInteger squareIndex = 0; squareIndex < squareCount; squareIndex++) {
+        SquareView *square = [SquareView new];
+        square.translatesAutoresizingMaskIntoConstraints = NO;
+        [square setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
+        [square setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
         
-        NSDictionary *views;
-        if (pieceIndex == 0)
-            views = @{@"square": squareView};
-        else
-            views = @{@"square": squareView, @"previous": previousSquareView};
-        
-        NSDictionary *metrics = @{@"padding" : @(EdgeToPiecePadding)};
-        
-        if (pieceIndex == 0)
-            [contraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(padding)-[square]" options:0 metrics:metrics views:views]];
-        else if (pieceIndex == PiecesInDeck - 1)
-            [contraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[previous]-(padding)-[square]-(padding)-|" options:0 metrics:metrics views:views]];
-        else
-            [contraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[previous]-(padding)-[square]" options:0 metrics:metrics views:views]];
-
-        [contraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(padding)-[square]-(padding)-|" options:0 metrics:metrics views:views]];
-
-        previousSquareView = squareView;
+        [self addSubview:square];
+        [squareViews addObject:square];
     }
+    
     _squareViews = [squareViews copy];
     
-    [self addConstraints:contraints];
+    [self setNeedsUpdateConstraints:YES];
+}
+
+- (void)setImage:(NSImage *)image forSquareAtIndex:(NSUInteger)squareIndex;
+{
     
-    return self;
 }
 
 #pragma mark - NSView subclass
@@ -65,6 +62,33 @@ static const CGFloat EdgeToPiecePadding = 8;
     CALayer *layer = [super makeBackingLayer];
     layer.backgroundColor = [[NSColor blueColor] CGColor];
     return layer;
+}
+
+- (void)updateConstraints;
+{
+    NSDictionary *metrics = @{@"padding" : @(EdgeToPiecePadding)};
+
+    SquareView *previousSquareView;
+    for (SquareView *squareView in _squareViews) {
+        NSDictionary *views;
+        if (previousSquareView == nil)
+            views = @{@"square": squareView};
+        else
+            views = @{@"square": squareView, @"previous": previousSquareView};
+        
+        
+        if (previousSquareView == nil)
+            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(padding)-[square]" options:0 metrics:metrics views:views]];
+        else
+            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[previous]-(padding)-[square]" options:0 metrics:metrics views:views]];
+        
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(padding)-[square]-(padding)-|" options:0 metrics:metrics views:views]];
+        
+        previousSquareView = squareView;
+    }
+    
+    if (previousSquareView)
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[previousSquareView]-(padding)-|" options:0 metrics:metrics views:NSDictionaryOfVariableBindings(previousSquareView)]];
 }
 
 @end

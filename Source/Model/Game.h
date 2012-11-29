@@ -8,10 +8,12 @@
 
 #import <Foundation/NSObject.h>
 
-@class Playfield;
+@class Playfield, Deck;
 
 @interface Game : NSObject
 
 @property(nonatomic,readonly) Playfield *playfield;
+@property(nonatomic,readonly) Deck *leftDeck;
+@property(nonatomic,readonly) Deck *rightDeck;
 
 @end

@@ -10,6 +10,7 @@
 
 @interface DeckView : NSView
 
-@property(nonatomic,readonly) NSArray *squareViews;
+@property(nonatomic) NSUInteger squareCount;
+- (void)setImage:(NSImage *)image forSquareAtIndex:(NSUInteger)squareIndex;
 
 @end

@@ -9,6 +9,7 @@
 #import "Game.h"
 
 #import "Playfield.h"
+#import "Deck.h"
 
 @implementation Game
 
@@ -18,6 +19,8 @@
         return nil;
     
     _playfield = [[Playfield alloc] init];
+    _leftDeck = [[Deck alloc] init];
+    _rightDeck = [[Deck alloc] init];
     
     return self;
 }

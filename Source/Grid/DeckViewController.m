@@ -31,11 +31,6 @@
     return self;
 }
 
-- (IBAction)squareViewClicked:(NSEvent *)event;
-{
-    NSLog(@"clicked");
-}
-
 #pragma mark - NSViewController subclass
 
 - (void)loadView;
