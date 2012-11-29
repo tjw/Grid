@@ -8,14 +8,14 @@
 
 #import "PlayfieldView.h"
 
-#import "PieceView.h"
+#import "SquareView.h"
 
 static const CGFloat EdgeToPiecePadding = 8;
 
 @implementation PlayfieldView
 {
     NSArray *_constraints;
-    NSArray *_pieceViews;
+    NSArray *_squareViews;
 }
 
 #pragma mark - API
@@ -33,7 +33,7 @@ static const CGFloat EdgeToPiecePadding = 8;
         _constraints = nil;
     }
 
-    NSMutableArray *pieceViews = [NSMutableArray new];
+    NSMutableArray *squareViews = [NSMutableArray new];
     NSMutableArray *contraints = [NSMutableArray new];
     
     if (_constraints) {
@@ -43,23 +43,23 @@ static const CGFloat EdgeToPiecePadding = 8;
     
     for (NSUInteger pieceIndexY = 0; pieceIndexY < _height; pieceIndexY++) {
         for (NSUInteger pieceIndexX = 0; pieceIndexX < _width; pieceIndexX++) {
-            PieceView *pieceView = [[PieceView alloc] init];
-            pieceView.translatesAutoresizingMaskIntoConstraints = NO;
-            [pieceView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
-            [pieceView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
+            SquareView *squareView = [[SquareView alloc] init];
+            squareView.translatesAutoresizingMaskIntoConstraints = NO;
+            [squareView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
+            [squareView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
             
-            [pieceViews addObject:pieceView];
-            [self addSubview:pieceView];
+            [squareViews addObject:squareView];
+            [self addSubview:squareView];
             
-            NSMutableDictionary *views = [NSMutableDictionary dictionaryWithObject:pieceView forKey:@"piece"];
-            PieceView *before;
+            NSMutableDictionary *views = [NSMutableDictionary dictionaryWithObject:squareView forKey:@"piece"];
+            SquareView *before;
             if (pieceIndexX > 0) {
-                before = pieceViews[pieceIndexY * _width + (pieceIndexX - 1)];
+                before = squareViews[pieceIndexY * _width + (pieceIndexX - 1)];
                 views[@"before"] = before;
             }
-            PieceView *above;
+            SquareView *above;
             if (pieceIndexY > 0) {
-                above = pieceViews[(pieceIndexY - 1) * _width + pieceIndexX];
+                above = squareViews[(pieceIndexY - 1) * _width + pieceIndexX];
                 views[@"above"] = above;
             }
             
@@ -85,7 +85,7 @@ static const CGFloat EdgeToPiecePadding = 8;
             }
         }
     }
-    _pieceViews = [pieceViews copy];
+    _squareViews = [squareViews copy];
     
     [self addConstraints:contraints];
 }

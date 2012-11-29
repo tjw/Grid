@@ -9,15 +9,15 @@
 #import "DeckViewController.h"
 
 #import "DeckView.h"
-#import "PieceView.h"
-#import "PieceViewDelegate.h"
+#import "SquareView.h"
+#import "SquareViewDelegate.h"
 #import "OATrackingLoop.h"
 
 @interface NSView ()
 - (NSString *)_subtreeDescription;
 @end
 
-@interface DeckViewController () <PieceViewDelegate>
+@interface DeckViewController () <SquareViewDelegate>
 
 @end
 
@@ -31,7 +31,7 @@
     return self;
 }
 
-- (IBAction)pieceViewClicked:(NSEvent *)event;
+- (IBAction)squareViewClicked:(NSEvent *)event;
 {
     NSLog(@"clicked");
 }
@@ -47,28 +47,28 @@
     [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
     [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
 
-    for (PieceView *pieceView in view.pieceViews) {
-        pieceView.delegate = self;
-        pieceView.wantsLayer = YES; // otherwise we don't get our layer until later
-        pieceView.layer.contents = [NSImage imageNamed:@"Emitter"];
+    for (SquareView *squareView in view.squareViews) {
+        squareView.delegate = self;
+        squareView.wantsLayer = YES; // otherwise we don't get our layer until later
+        squareView.layer.contents = [NSImage imageNamed:@"Emitter"];
     }
     
     self.view = view;
 }
 
-#pragma mark - PieceViewDelegate
+#pragma mark - SquareViewDelegate
 
-- (void)pieceView:(PieceView *)_pieceView clicked:(NSEvent *)mouseDown;
+- (void)squareView:(SquareView *)_squareView clicked:(NSEvent *)mouseDown;
 {
     // TODO: Better way for the deck to get this.
     NSView *parentView = self.view.window.contentView;
     
-    NSRect originalPieceFrameInParentView = [parentView convertRect:_pieceView.bounds fromView:_pieceView];
+    NSRect originalSquareFrameInParentView = [parentView convertRect:_squareView.bounds fromView:_squareView];
     
     OATrackingLoop *trackingLoop = [parentView trackingLoopForMouseDown:mouseDown];
     trackingLoop.disablesAnimation = NO; // Without this, my layer-backed view doesn't update at all.
     
-    __block PieceView *draggingView;
+    __block SquareView *draggingView;
     __block NSLayoutConstraint *xConstraint;
     __block NSLayoutConstraint *yConstraint;
     __block NSPoint initialPoint;
@@ -77,20 +77,20 @@
     
     void (^updateDrag)(void) = ^{
         NSSize offset = [_trackingLoop draggedOffsetInView];
-        xConstraint.constant = originalPieceFrameInParentView.origin.x + offset.width;
-        yConstraint.constant = -(originalPieceFrameInParentView.origin.y + offset.height); // TODO: Why does this need negation?
+        xConstraint.constant = originalSquareFrameInParentView.origin.x + offset.width;
+        yConstraint.constant = -(originalSquareFrameInParentView.origin.y + offset.height); // TODO: Why does this need negation?
     };
     
     trackingLoop.hysteresisSize = 4;
     trackingLoop.hysteresisExit = ^(OATrackingLoopExitPoint exitPoint){
-        draggingView = [PieceView new];
+        draggingView = [SquareView new];
         draggingView.translatesAutoresizingMaskIntoConstraints = NO;
         [draggingView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
         [draggingView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
         [parentView addSubview:draggingView positioned:NSWindowAbove relativeTo:nil];
         
         draggingView.layer.backgroundColor = [[NSColor yellowColor] CGColor];
-        draggingView.layer.contents = _pieceView.layer.contents;
+        draggingView.layer.contents = _squareView.layer.contents;
 
         xConstraint = [NSLayoutConstraint constraintWithItem:draggingView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:parentView attribute:NSLayoutAttributeLeft multiplier:1 constant:0];
         yConstraint = [NSLayoutConstraint constraintWithItem:draggingView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:parentView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];

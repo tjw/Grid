@@ -8,7 +8,7 @@
 
 #import "DeckView.h"
 
-#import "PieceView.h"
+#import "SquareView.h"
 
 static const NSUInteger PiecesInDeck = 5;
 static const CGFloat EdgeToPiecePadding = 8;
@@ -20,38 +20,38 @@ static const CGFloat EdgeToPiecePadding = 8;
     if (!(self = [super initWithFrame:frame]))
         return nil;
     
-    NSMutableArray *pieceViews = [NSMutableArray new];
+    NSMutableArray *squareViews = [NSMutableArray new];
     NSMutableArray *contraints = [NSMutableArray new];
     
-    PieceView *previousPieceView;
+    SquareView *previousSquareView;
     for (NSUInteger pieceIndex = 0; pieceIndex < PiecesInDeck; pieceIndex++) {
-        PieceView *pieceView = [[PieceView alloc] init];
-        pieceView.translatesAutoresizingMaskIntoConstraints = NO;
-        [pieceView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
-        [pieceView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
-        [pieceViews addObject:pieceView];
-        [self addSubview:pieceView];
+        SquareView *squareView = [[SquareView alloc] init];
+        squareView.translatesAutoresizingMaskIntoConstraints = NO;
+        [squareView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
+        [squareView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
+        [squareViews addObject:squareView];
+        [self addSubview:squareView];
         
         NSDictionary *views;
         if (pieceIndex == 0)
-            views = @{@"piece": pieceView};
+            views = @{@"square": squareView};
         else
-            views = @{@"piece": pieceView, @"previous": previousPieceView};
+            views = @{@"square": squareView, @"previous": previousSquareView};
         
         NSDictionary *metrics = @{@"padding" : @(EdgeToPiecePadding)};
         
         if (pieceIndex == 0)
-            [contraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(padding)-[piece]" options:0 metrics:metrics views:views]];
+            [contraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(padding)-[square]" options:0 metrics:metrics views:views]];
         else if (pieceIndex == PiecesInDeck - 1)
-            [contraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[previous]-(padding)-[piece]-(padding)-|" options:0 metrics:metrics views:views]];
+            [contraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[previous]-(padding)-[square]-(padding)-|" options:0 metrics:metrics views:views]];
         else
-            [contraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[previous]-(padding)-[piece]" options:0 metrics:metrics views:views]];
+            [contraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[previous]-(padding)-[square]" options:0 metrics:metrics views:views]];
 
-        [contraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(padding)-[piece]-(padding)-|" options:0 metrics:metrics views:views]];
+        [contraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(padding)-[square]-(padding)-|" options:0 metrics:metrics views:views]];
 
-        previousPieceView = pieceView;
+        previousSquareView = squareView;
     }
-    _pieceViews = [pieceViews copy];
+    _squareViews = [squareViews copy];
     
     [self addConstraints:contraints];
     

@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Cocoatoa. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <Foundation/NSObject.h>
 
 @interface Playfield : NSObject
 

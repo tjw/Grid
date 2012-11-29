@@ -8,7 +8,12 @@
 
 #import "Playfield.h"
 
+#import "Square.h"
+
 @implementation Playfield
+{
+    NSMutableArray *_squares;
+}
 
 - init;
 {
@@ -18,6 +23,10 @@
     _width = 14;
     _height = 9;
     
+    _squares = [[NSMutableArray alloc] init];
+    for (NSUInteger squareIndex = 0; squareIndex < _width * _height; squareIndex++)
+        [_squares addObject:[Square new]];
+         
     return self;
 }
 

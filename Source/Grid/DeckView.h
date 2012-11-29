@@ -10,6 +10,6 @@
 
 @interface DeckView : NSView
 
-@property(nonatomic,readonly) NSArray *pieceViews;
+@property(nonatomic,readonly) NSArray *squareViews;
 
 @end

@@ -1,5 +1,5 @@
 //
-//  PieceView.h
+//  SquareView.h
 //  Grid
 //
 //  Created by Timothy J. Wood on 11/23/12.
@@ -8,8 +8,8 @@
 
 #import <AppKit/NSView.h>
 
-@protocol PieceViewDelegate;
+@protocol SquareViewDelegate;
 
-@interface PieceView : NSView
-@property(nonatomic,weak) id <PieceViewDelegate> delegate;
+@interface SquareView : NSView
+@property(nonatomic,weak) id <SquareViewDelegate> delegate;
 @end
