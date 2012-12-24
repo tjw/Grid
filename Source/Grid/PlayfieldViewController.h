@@ -9,9 +9,12 @@
 #import "OUIViewController.h"
 
 @class Playfield;
+@class SquareView;
 
 @interface PlayfieldViewController : OUIViewController
 
 @property(nonatomic,strong) Playfield *playfield;
+
+- (void)dragUnitFromSquareView:(SquareView *)squareView withEvent:(NSEvent *)mouseDown;
 
 @end

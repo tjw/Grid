@@ -8,8 +8,9 @@
 
 #import "OUIViewController.h"
 
-@class Deck;
+@class PlayfieldViewController, Deck;
 
 @interface DeckViewController : OUIViewController
+@property(nonatomic,weak) PlayfieldViewController *playfieldController;
 @property(nonatomic) Deck *deck;
 @end

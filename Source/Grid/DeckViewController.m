@@ -11,8 +11,8 @@
 #import "DeckView.h"
 #import "SquareView.h"
 #import "DeckViewDelegate.h"
-#import "OATrackingLoop.h"
 #import "Deck.h"
+#import "PlayfieldViewController.h"
 
 @interface NSView ()
 - (NSString *)_subtreeDescription;
@@ -31,6 +31,8 @@
     
     return self;
 }
+
+@synthesize playfieldController = _weak_playfieldController;
 
 - (void)setDeck:(Deck *)deck;
 {
@@ -72,67 +74,13 @@
 
 - (void)deckView:(DeckView *)deckView squareView:(SquareView *)squareView clicked:(NSEvent *)mouseDown;
 {
-    // TODO: Better way for the deck to get this.
-    NSView *parentView = self.view.window.contentView;
+    PlayfieldViewController *playfieldController = _weak_playfieldController;
+    if (!playfieldController) {
+        assert(0);
+        return;
+    }
     
-    NSRect originalSquareFrameInParentView = [parentView convertRect:squareView.bounds fromView:squareView];
-    
-    OATrackingLoop *trackingLoop = [parentView trackingLoopForMouseDown:mouseDown];
-    trackingLoop.disablesAnimation = NO; // Without this, my layer-backed view doesn't update at all.
-    
-    __block SquareView *draggingView;
-    __block NSLayoutConstraint *xConstraint;
-    __block NSLayoutConstraint *yConstraint;
-    __block NSPoint initialPoint;
-    
-    __weak OATrackingLoop *_weak_trackingLoop = trackingLoop;
-    
-    void (^updateDrag)(void) = ^{
-        OATrackingLoop *strongTrackingLoop = _weak_trackingLoop;
-        if (!strongTrackingLoop) {
-            assert(0);
-            return;
-        }
-        NSSize offset = [strongTrackingLoop draggedOffsetInView];
-        xConstraint.constant = originalSquareFrameInParentView.origin.x + offset.width;
-        yConstraint.constant = -(originalSquareFrameInParentView.origin.y + offset.height); // TODO: Why does this need negation?
-    };
-    
-    trackingLoop.hysteresisSize = 4;
-    trackingLoop.hysteresisExit = ^(OATrackingLoopExitPoint exitPoint){
-        OATrackingLoop *strongTrackingLoop = _weak_trackingLoop;
-        if (!strongTrackingLoop) {
-            assert(0);
-            return;
-        }
-
-        draggingView = [SquareView new];
-        draggingView.translatesAutoresizingMaskIntoConstraints = NO;
-        [draggingView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
-        [draggingView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
-        [parentView addSubview:draggingView positioned:NSWindowAbove relativeTo:nil];
-        
-        draggingView.layer.backgroundColor = [[NSColor yellowColor] CGColor];
-        draggingView.layer.contents = squareView.layer.contents;
-
-        xConstraint = [NSLayoutConstraint constraintWithItem:draggingView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:parentView attribute:NSLayoutAttributeLeft multiplier:1 constant:0];
-        yConstraint = [NSLayoutConstraint constraintWithItem:draggingView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:parentView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-        
-        initialPoint = [strongTrackingLoop initialMouseDownPointInView];
-        updateDrag();
-        
-        [parentView addConstraint:xConstraint];
-        [parentView addConstraint:yConstraint];
-    };
-    trackingLoop.up = ^{
-        [draggingView removeFromSuperview];
-        [parentView removeConstraint:xConstraint];
-        [parentView removeConstraint:yConstraint];
-    };
-    trackingLoop.dragged = ^{
-        updateDrag();
-    };
-    [trackingLoop run];
+    [playfieldController dragUnitFromSquareView:squareView withEvent:mouseDown];
 }
 
 #pragma mark - Private
