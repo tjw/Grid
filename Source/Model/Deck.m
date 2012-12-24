@@ -23,6 +23,7 @@ static const NSUInteger DeckSize = 5;
     for (NSUInteger squareIndex = 0; squareIndex < DeckSize; squareIndex++) {
         [squares addObject:[Square new]];
     }
+    _squares = [squares copy];
     
     return self;
 }

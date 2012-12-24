@@ -126,11 +126,14 @@
 - (void)_updateDeck;
 {
     assert([self isViewLoaded]);
+    assert(_deck);
+    
     DeckView *view = (DeckView *)self.view;
     
     view.squareCount = [_deck.squares count];
     for (NSUInteger idx = 0; idx < view.squareCount; idx++)
         [view setImage:[NSImage imageNamed:@"Emitter"] forSquareAtIndex:idx];
+    NSLog(@"TODO: no delegates set on square views, so no dragging works");
 }
 
 @end
