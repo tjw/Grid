@@ -52,7 +52,10 @@ static const CGFloat EdgeToPiecePadding = 8;
 
 - (void)setImage:(NSImage *)image forSquareAtIndex:(NSUInteger)squareIndex;
 {
-    
+    // TODO: Bad, accessing its layer.
+    SquareView *squareView = _squareViews[squareIndex];
+    squareView.wantsLayer = YES; // otherwise we don't get our layer until later
+    squareView.layer.contents = image;
 }
 
 #pragma mark - NSView subclass
@@ -66,6 +69,8 @@ static const CGFloat EdgeToPiecePadding = 8;
 
 - (void)updateConstraints;
 {
+    [super updateConstraints];
+    
     NSDictionary *metrics = @{@"padding" : @(EdgeToPiecePadding)};
 
     SquareView *previousSquareView;

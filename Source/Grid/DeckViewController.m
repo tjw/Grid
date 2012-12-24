@@ -12,6 +12,7 @@
 #import "SquareView.h"
 #import "SquareViewDelegate.h"
 #import "OATrackingLoop.h"
+#import "Deck.h"
 
 @interface NSView ()
 - (NSString *)_subtreeDescription;
@@ -31,6 +32,17 @@
     return self;
 }
 
+- (void)setDeck:(Deck *)deck;
+{
+    if (_deck == deck)
+        return;
+    
+    _deck = deck;
+    
+    if (self.isViewLoaded)
+        [self _updateDeck];
+}
+
 #pragma mark - NSViewController subclass
 
 - (void)loadView;
@@ -42,13 +54,15 @@
     [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
     [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
 
-    for (SquareView *squareView in view.squareViews) {
-        squareView.delegate = self;
-        squareView.wantsLayer = YES; // otherwise we don't get our layer until later
-        squareView.layer.contents = [NSImage imageNamed:@"Emitter"];
-    }
-    
     self.view = view;
+    assert(self.isViewLoaded);
+}
+
+- (void)viewDidLoad;
+{
+    [super viewDidLoad];
+    
+    [self _updateDeck];
 }
 
 #pragma mark - SquareViewDelegate
@@ -105,6 +119,18 @@
         updateDrag();
     };
     [trackingLoop run];
+}
+
+#pragma mark - Private
+
+- (void)_updateDeck;
+{
+    assert([self isViewLoaded]);
+    DeckView *view = (DeckView *)self.view;
+    
+    view.squareCount = [_deck.squares count];
+    for (NSUInteger idx = 0; idx < view.squareCount; idx++)
+        [view setImage:[NSImage imageNamed:@"Emitter"] forSquareAtIndex:idx];
 }
 
 @end

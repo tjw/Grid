@@ -36,6 +36,9 @@
 {
     _game = game;
     _playfieldViewController.playfield = game.playfield;
+    
+    _leftDeckViewController.deck = game.leftDeck;
+    _rightDeckViewController.deck = game.rightDeck;
 }
 
 #pragma mark - NSWindowController subclass

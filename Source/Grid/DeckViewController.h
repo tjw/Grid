@@ -6,8 +6,10 @@
 //  Copyright (c) 2012 Cocoatoa. All rights reserved.
 //
 
-#import <AppKit/NSViewController.h>
+#import "OUIViewController.h"
 
-@interface DeckViewController : NSViewController
+@class Deck;
 
+@interface DeckViewController : OUIViewController
+@property(nonatomic) Deck *deck;
 @end

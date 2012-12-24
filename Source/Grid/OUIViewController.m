@@ -47,6 +47,8 @@
     if (view == nil) {
         _vcFlags.viewLoaded = NO;
         _vcFlags.hasSentViewDidLoad = NO;
+    } else {
+        _vcFlags.viewLoaded = YES;
     }
 }
 
