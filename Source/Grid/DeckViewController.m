@@ -10,7 +10,7 @@
 
 #import "DeckView.h"
 #import "SquareView.h"
-#import "SquareViewDelegate.h"
+#import "DeckViewDelegate.h"
 #import "OATrackingLoop.h"
 #import "Deck.h"
 
@@ -18,7 +18,7 @@
 - (NSString *)_subtreeDescription;
 @end
 
-@interface DeckViewController () <SquareViewDelegate>
+@interface DeckViewController () <DeckViewDelegate>
 
 @end
 
@@ -54,6 +54,9 @@
     [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
     [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
 
+    view.delegate = self;
+    
+    
     self.view = view;
     assert(self.isViewLoaded);
 }
@@ -65,9 +68,9 @@
     [self _updateDeck];
 }
 
-#pragma mark - SquareViewDelegate
+#pragma mark - DeckViewDelegate
 
-- (void)squareView:(SquareView *)_squareView clicked:(NSEvent *)mouseDown;
+- (void)deckView:(DeckView *)deckView squareView:(SquareView *)_squareView clicked:(NSEvent *)mouseDown;
 {
     // TODO: Better way for the deck to get this.
     NSView *parentView = self.view.window.contentView;
@@ -133,7 +136,6 @@
     view.squareCount = [_deck.squares count];
     for (NSUInteger idx = 0; idx < view.squareCount; idx++)
         [view setImage:[NSImage imageNamed:@"Emitter"] forSquareAtIndex:idx];
-    NSLog(@"TODO: no delegates set on square views, so no dragging works");
 }
 
 @end

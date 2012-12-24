@@ -9,15 +9,19 @@
 #import "DeckView.h"
 
 #import "SquareView.h"
+#import "SquareViewDelegate.h"
+#import "DeckViewDelegate.h"
 
 static const CGFloat EdgeToPiecePadding = 8;
 
-@interface DeckView ()
+@interface DeckView () <SquareViewDelegate>
 @property(nonatomic,readonly) NSArray *squareViews;
 @property(nonatomic,readonly) NSArray *squareViewConstraints;
 @end
 
 @implementation DeckView
+
+@synthesize delegate = _weak_delegate;
 
 - (NSUInteger)squareCount;
 {
@@ -40,6 +44,8 @@ static const CGFloat EdgeToPiecePadding = 8;
         square.translatesAutoresizingMaskIntoConstraints = NO;
         [square setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
         [square setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
+        
+        square.delegate = self;
         
         [self addSubview:square];
         [squareViews addObject:square];
@@ -94,6 +100,15 @@ static const CGFloat EdgeToPiecePadding = 8;
     
     if (previousSquareView)
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[previousSquareView]-(padding)-|" options:0 metrics:metrics views:NSDictionaryOfVariableBindings(previousSquareView)]];
+}
+
+#pragma mark - SquareViewDelegate
+
+- (void)squareView:(SquareView *)_squareView clicked:(NSEvent *)mouseDown;
+{
+    id <DeckViewDelegate> delegate = _weak_delegate;
+    
+    [delegate deckView:self squareView:_squareView clicked:mouseDown];
 }
 
 @end

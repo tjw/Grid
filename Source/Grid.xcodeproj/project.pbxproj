@@ -53,6 +53,7 @@
 		349EBCF31660793200DC45D3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		349EBCF41660793200DC45D3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		349EBCF71660793200DC45D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		34CF944416883D9800A940C0 /* DeckViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckViewDelegate.h; sourceTree = "<group>"; };
 		34F08081166079D400F3FB85 /* GridWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridWindowController.h; sourceTree = "<group>"; };
 		34F08082166079D400F3FB85 /* GridWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridWindowController.m; sourceTree = "<group>"; };
 		34F08083166079D400F3FB85 /* GridWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GridWindowController.xib; sourceTree = "<group>"; };
@@ -176,6 +177,7 @@
 				34F0808B16607AE600F3FB85 /* DeckViewController.m */,
 				34F0809416607C9100F3FB85 /* DeckView.h */,
 				34F0809516607C9100F3FB85 /* DeckView.m */,
+				34CF944416883D9800A940C0 /* DeckViewDelegate.h */,
 			);
 			name = Deck;
 			sourceTree = "<group>";

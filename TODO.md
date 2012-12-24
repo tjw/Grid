@@ -4,7 +4,7 @@
 * One player only, can drag out pieces from either hand
 * Hands of pieces all the same emitter
 
-## v0.2
+## v0.2 [current]
 
 * Extract model code to model
 * Add drop support to change model
