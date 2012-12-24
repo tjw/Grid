@@ -70,12 +70,12 @@
 
 #pragma mark - DeckViewDelegate
 
-- (void)deckView:(DeckView *)deckView squareView:(SquareView *)_squareView clicked:(NSEvent *)mouseDown;
+- (void)deckView:(DeckView *)deckView squareView:(SquareView *)squareView clicked:(NSEvent *)mouseDown;
 {
     // TODO: Better way for the deck to get this.
     NSView *parentView = self.view.window.contentView;
     
-    NSRect originalSquareFrameInParentView = [parentView convertRect:_squareView.bounds fromView:_squareView];
+    NSRect originalSquareFrameInParentView = [parentView convertRect:squareView.bounds fromView:squareView];
     
     OATrackingLoop *trackingLoop = [parentView trackingLoopForMouseDown:mouseDown];
     trackingLoop.disablesAnimation = NO; // Without this, my layer-backed view doesn't update at all.
@@ -85,16 +85,27 @@
     __block NSLayoutConstraint *yConstraint;
     __block NSPoint initialPoint;
     
-    __weak OATrackingLoop *_trackingLoop = trackingLoop;
+    __weak OATrackingLoop *_weak_trackingLoop = trackingLoop;
     
     void (^updateDrag)(void) = ^{
-        NSSize offset = [_trackingLoop draggedOffsetInView];
+        OATrackingLoop *strongTrackingLoop = _weak_trackingLoop;
+        if (!strongTrackingLoop) {
+            assert(0);
+            return;
+        }
+        NSSize offset = [strongTrackingLoop draggedOffsetInView];
         xConstraint.constant = originalSquareFrameInParentView.origin.x + offset.width;
         yConstraint.constant = -(originalSquareFrameInParentView.origin.y + offset.height); // TODO: Why does this need negation?
     };
     
     trackingLoop.hysteresisSize = 4;
     trackingLoop.hysteresisExit = ^(OATrackingLoopExitPoint exitPoint){
+        OATrackingLoop *strongTrackingLoop = _weak_trackingLoop;
+        if (!strongTrackingLoop) {
+            assert(0);
+            return;
+        }
+
         draggingView = [SquareView new];
         draggingView.translatesAutoresizingMaskIntoConstraints = NO;
         [draggingView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
@@ -102,12 +113,12 @@
         [parentView addSubview:draggingView positioned:NSWindowAbove relativeTo:nil];
         
         draggingView.layer.backgroundColor = [[NSColor yellowColor] CGColor];
-        draggingView.layer.contents = _squareView.layer.contents;
+        draggingView.layer.contents = squareView.layer.contents;
 
         xConstraint = [NSLayoutConstraint constraintWithItem:draggingView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:parentView attribute:NSLayoutAttributeLeft multiplier:1 constant:0];
         yConstraint = [NSLayoutConstraint constraintWithItem:draggingView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:parentView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
         
-        initialPoint = [_trackingLoop initialMouseDownPointInView];
+        initialPoint = [strongTrackingLoop initialMouseDownPointInView];
         updateDrag();
         
         [parentView addConstraint:xConstraint];
