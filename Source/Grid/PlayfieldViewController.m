@@ -70,7 +70,6 @@
             destinationSquareView = nearestSquareView;
             destinationSquareView.isDragDestination = YES;
         }
-
     };
     
     trackingLoop.hysteresisSize = 4;
