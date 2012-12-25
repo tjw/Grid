@@ -90,6 +90,20 @@ static const CGFloat EdgeToPiecePadding = 8;
     [self addConstraints:contraints];
 }
 
+// Takes a point in the receivers coordinate system (unlike -hitTest:).
+- (SquareView *)squareViewAtPoint:(NSPoint)point;
+{
+    assert(self.superview);
+    NSView *view = [self hitTest:[self convertPoint:point toView:self.superview]];
+    
+    while (view && view != self) {
+        if ([view isKindOfClass:[SquareView class]])
+            return (SquareView *)view;
+        view = view.superview;
+    }
+    return nil;
+}
+
 #pragma mark - NSView subclass
 
 - (CALayer *)makeBackingLayer;

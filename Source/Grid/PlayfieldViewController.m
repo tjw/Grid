@@ -43,10 +43,13 @@
     OATrackingLoop *trackingLoop = [parentView trackingLoopForMouseDown:mouseDown];
     trackingLoop.disablesAnimation = NO; // Without this, my layer-backed view doesn't update at all.
     
+    PlayfieldView *playfieldView = (PlayfieldView *)self.view;
+    
     __block SquareView *draggingView;
     __block NSLayoutConstraint *xConstraint;
     __block NSLayoutConstraint *yConstraint;
     __block NSPoint initialPoint;
+    __block SquareView *destinationSquareView;
     
     __weak OATrackingLoop *_weak_trackingLoop = trackingLoop;
     
@@ -59,6 +62,10 @@
         NSSize offset = [strongTrackingLoop draggedOffsetInView];
         xConstraint.constant = originalSquareFrameInParentView.origin.x + offset.width;
         yConstraint.constant = -(originalSquareFrameInParentView.origin.y + offset.height); // TODO: Why does this need negation?
+        
+        NSPoint playfieldPoint = [parentView convertPoint:trackingLoop.currentMouseDraggedPointInView toView:playfieldView];
+        destinationSquareView = [playfieldView squareViewAtPoint:playfieldPoint];
+        NSLog(@"playfieldPoint %@ destinationSquareView %@", NSStringFromPoint(playfieldPoint), destinationSquareView);
     };
     
     trackingLoop.hysteresisSize = 4;
