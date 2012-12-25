@@ -16,6 +16,15 @@ static CGFloat SquareViewSize = 64;
 
 @synthesize delegate = _weak_delegate;
 
+- (void)setIsDragDestination:(BOOL)isDragDestination;
+{
+    if (_isDragDestination == isDragDestination)
+        return;
+    
+    _isDragDestination = isDragDestination;
+    [self setNeedsDisplay:YES];
+}
+
 #pragma mark - NSResponder subclass
 
 - (void)mouseDown:(NSEvent *)theEvent;
@@ -29,6 +38,11 @@ static CGFloat SquareViewSize = 64;
 
 #pragma mark - NSView subclass
 
+- (BOOL)wantsUpdateLayer;
+{
+    return YES;
+}
+
 - (CALayer *)makeBackingLayer;
 {
     CALayer *layer = [super makeBackingLayer];
@@ -39,6 +53,12 @@ static CGFloat SquareViewSize = 64;
 - (CGSize)intrinsicContentSize;
 {
     return CGSizeMake(SquareViewSize, SquareViewSize);
+}
+
+- (void)updateLayer;
+{
+    CALayer *layer = self.layer;
+    layer.backgroundColor = _isDragDestination ? [[NSColor redColor] CGColor] : [[NSColor greenColor] CGColor];
 }
 
 @end

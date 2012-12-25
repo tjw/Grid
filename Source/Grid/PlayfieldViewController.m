@@ -64,8 +64,13 @@
         yConstraint.constant = -(originalSquareFrameInParentView.origin.y + offset.height); // TODO: Why does this need negation?
         
         NSPoint playfieldPoint = [parentView convertPoint:trackingLoop.currentMouseDraggedPointInView toView:playfieldView];
-        destinationSquareView = [playfieldView squareViewNearestPoint:playfieldPoint];
-        NSLog(@"playfieldPoint %@ destinationSquareView %@", NSStringFromPoint(playfieldPoint), destinationSquareView);
+        SquareView *nearestSquareView = [playfieldView squareViewNearestPoint:playfieldPoint];
+        if (nearestSquareView != destinationSquareView) {
+            destinationSquareView.isDragDestination = NO;
+            destinationSquareView = nearestSquareView;
+            destinationSquareView.isDragDestination = YES;
+        }
+
     };
     
     trackingLoop.hysteresisSize = 4;
@@ -95,6 +100,7 @@
         [parentView addConstraint:yConstraint];
     };
     trackingLoop.up = ^{
+        destinationSquareView.isDragDestination = NO;
         [draggingView removeFromSuperview];
         [parentView removeConstraint:xConstraint];
         [parentView removeConstraint:yConstraint];

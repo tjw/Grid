@@ -12,4 +12,5 @@
 
 @interface SquareView : NSView
 @property(nonatomic,weak) id <SquareViewDelegate> delegate;
+@property(nonatomic) BOOL isDragDestination;
 @end
