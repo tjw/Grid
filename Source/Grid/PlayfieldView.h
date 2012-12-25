@@ -17,5 +17,6 @@
 @property(nonatomic,readonly) NSUInteger height;
 
 - (SquareView *)squareViewAtPoint:(NSPoint)point;
+- (SquareView *)squareViewNearestPoint:(NSPoint)point;
 
 @end

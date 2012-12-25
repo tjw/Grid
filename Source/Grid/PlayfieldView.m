@@ -104,6 +104,34 @@ static const CGFloat EdgeToPiecePadding = 8;
     return nil;
 }
 
+// Takes a point in the receivers coordinate system (unlike -hitTest:).
+- (SquareView *)squareViewNearestPoint:(NSPoint)point;
+{
+    SquareView *bestView;
+    CGFloat bestDistanceSquared = CGFLOAT_MAX;
+
+    // Maybe put this in the callers.
+    if (!CGRectContainsPoint(self.bounds, point))
+        return nil;
+    
+    for (SquareView *candidateView in _squareViews) {
+        CGRect bounds = candidateView.frame;
+        if (CGRectContainsPoint(bounds, point))
+            return candidateView; // We assume non-overlapping candidates, so it isn't going to get better than this.
+        
+        CGPoint center = CGPointMake(NSMidX(bounds), NSMidY(bounds));
+        CGSize offset = CGSizeMake(point.x - center.x, point.y - center.y);
+        CGFloat distanceSquared = offset.width * offset.width + offset.height * offset.height;
+        
+        if (distanceSquared < bestDistanceSquared) {
+            bestDistanceSquared = distanceSquared;
+            bestView = candidateView;
+        }
+    }
+    
+    return bestView;
+}
+
 #pragma mark - NSView subclass
 
 - (CALayer *)makeBackingLayer;

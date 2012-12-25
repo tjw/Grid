@@ -64,7 +64,7 @@
         yConstraint.constant = -(originalSquareFrameInParentView.origin.y + offset.height); // TODO: Why does this need negation?
         
         NSPoint playfieldPoint = [parentView convertPoint:trackingLoop.currentMouseDraggedPointInView toView:playfieldView];
-        destinationSquareView = [playfieldView squareViewAtPoint:playfieldPoint];
+        destinationSquareView = [playfieldView squareViewNearestPoint:playfieldPoint];
         NSLog(@"playfieldPoint %@ destinationSquareView %@", NSStringFromPoint(playfieldPoint), destinationSquareView);
     };
     
