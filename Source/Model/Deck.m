@@ -9,6 +9,7 @@
 #import "Deck.h"
 
 #import "Square.h"
+#import "Unit.h"
 
 static const NSUInteger DeckSize = 5;
 
@@ -21,7 +22,9 @@ static const NSUInteger DeckSize = 5;
     
     NSMutableArray *squares = [NSMutableArray new];
     for (NSUInteger squareIndex = 0; squareIndex < DeckSize; squareIndex++) {
-        [squares addObject:[Square new]];
+        Square *square = [Square new];
+        square.unit = [Unit new];
+        [squares addObject:square];
     }
     _squares = [squares copy];
     

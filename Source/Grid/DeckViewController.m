@@ -35,15 +35,24 @@
 
 @synthesize playfieldController = _weak_playfieldController;
 
+static unsigned UnitContext;
+
 - (void)setDeck:(Deck *)deck;
 {
     if (_deck == deck)
         return;
     
+    for (Square *square in _deck.squares)
+        [square removeObserver:self forKeyPath:KeyPath(square, unit) context:&UnitContext];
+    
     _deck = deck;
     
-    if (self.isViewLoaded)
-        [self _updateDeck];
+    for (Square *square in _deck.squares)
+        [square addObserver:self forKeyPath:KeyPath(square, unit) options:0 context:&UnitContext];
+    
+    if (self.isViewLoaded) {
+        [self _setupView];
+    }
 }
 
 - (Unit *)unitForSquareView:(SquareView *)squareView;
@@ -89,7 +98,8 @@
 {
     [super viewDidLoad];
     
-    [self _updateDeck];
+    if (_deck)
+        [self _setupView];
 }
 
 #pragma mark - DeckViewDelegate
@@ -107,16 +117,41 @@
 
 #pragma mark - Private
 
-- (void)_updateDeck;
+- (void)_setupView;
 {
-    assert([self isViewLoaded]);
+    assert(self.isViewLoaded);
     assert(_deck);
     
     DeckView *view = (DeckView *)self.view;
-    
     view.squareCount = [_deck.squares count];
-    for (NSUInteger idx = 0; idx < view.squareCount; idx++)
-        [view setImage:[NSImage imageNamed:@"Emitter"] forSquareAtIndex:idx];
+    
+    for (Square *square in _deck.squares) {
+        [self _squareChanged:square];
+    }
+}
+
+- (NSImage *)_imageForUnit:(Unit *)unit;
+{
+    // TODO: Something useful
+    if (unit)
+        return [NSImage imageNamed:@"Emitter"];
+    
+    return nil;
+}
+
+- (void)_squareChanged:(Square *)square;
+{
+    assert([self isViewLoaded]);
+    assert(_deck);
+    assert(square);
+    
+    DeckView *view = (DeckView *)self.view;
+    Unit *unit = square.unit;
+    
+    NSUInteger squareIndex = [_deck.squares indexOfObject:square];
+    assert(squareIndex != NSNotFound);
+
+    [view setImage:[self _imageForUnit:unit] forSquareAtIndex:squareIndex];
 }
 
 @end
