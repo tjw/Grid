@@ -29,6 +29,10 @@
     _leftDeckViewController = [DeckViewController new];
     _rightDeckViewController = [DeckViewController new];
     
+    _playfieldViewController.gridWindowController = self;
+    _leftDeckViewController.playfieldController = _playfieldViewController;
+    _rightDeckViewController.playfieldController = _playfieldViewController;
+
     return self;
 }
 
@@ -36,12 +40,13 @@
 {
     _game = game;
     _playfieldViewController.playfield = game.playfield;
-    
     _leftDeckViewController.deck = game.leftDeck;
-    _leftDeckViewController.playfieldController = _playfieldViewController;
-    
     _rightDeckViewController.deck = game.rightDeck;
-    _rightDeckViewController.playfieldController = _playfieldViewController;
+}
+
+- (void)userDraggedUnitFromDeckSquareView:(SquareView *)deckSquareView toPlayfieldSquare:(SquareView *)playfieldSquareView;
+{
+    NSLog(@"dragged");
 }
 
 #pragma mark - NSWindowController subclass

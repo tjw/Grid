@@ -8,6 +8,7 @@
 
 #import "PlayfieldViewController.h"
 
+#import "GridWindowController.h"
 #import "PlayfieldView.h"
 #import "Playfield.h"
 #import "OATrackingLoop.h"
@@ -17,6 +18,8 @@
 @end
 
 @implementation PlayfieldViewController
+
+@synthesize gridWindowController = _weak_gridWindowController;
 
 - (void)setPlayfield:(Playfield *)playfield;
 {
@@ -33,17 +36,19 @@
 
 #pragma mark - API
 
-- (void)dragUnitFromSquareView:(SquareView *)squareView withEvent:(NSEvent *)mouseDown;
+- (void)dragUnitFromSquareView:(SquareView *)sourceSquareView withEvent:(NSEvent *)mouseDown;
 {
     // TODO: Better way for the deck to get this.
     NSView *parentView = self.view.window.contentView;
     
-    NSRect originalSquareFrameInParentView = [parentView convertRect:squareView.bounds fromView:squareView];
+    NSRect originalSquareFrameInParentView = [parentView convertRect:sourceSquareView.bounds fromView:sourceSquareView];
     
     OATrackingLoop *trackingLoop = [parentView trackingLoopForMouseDown:mouseDown];
     trackingLoop.disablesAnimation = NO; // Without this, my layer-backed view doesn't update at all.
     
     PlayfieldView *playfieldView = (PlayfieldView *)self.view;
+    GridWindowController *gridWindowController = _weak_gridWindowController;
+    assert(gridWindowController);
     
     __block SquareView *draggingView;
     __block NSLayoutConstraint *xConstraint;
@@ -87,7 +92,7 @@
         [parentView addSubview:draggingView positioned:NSWindowAbove relativeTo:nil];
         
         draggingView.layer.backgroundColor = [[NSColor yellowColor] CGColor];
-        draggingView.layer.contents = squareView.layer.contents;
+        draggingView.layer.contents = sourceSquareView.layer.contents;
         
         xConstraint = [NSLayoutConstraint constraintWithItem:draggingView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:parentView attribute:NSLayoutAttributeLeft multiplier:1 constant:0];
         yConstraint = [NSLayoutConstraint constraintWithItem:draggingView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:parentView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
@@ -99,6 +104,7 @@
         [parentView addConstraint:yConstraint];
     };
     trackingLoop.up = ^{
+        [gridWindowController userDraggedUnitFromDeckSquareView:sourceSquareView toPlayfieldSquare:destinationSquareView];
         destinationSquareView.isDragDestination = NO;
         [draggingView removeFromSuperview];
         [parentView removeConstraint:xConstraint];

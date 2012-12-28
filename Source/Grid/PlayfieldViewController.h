@@ -8,13 +8,15 @@
 
 #import "OUIViewController.h"
 
+@class GridWindowController;
 @class Playfield;
 @class SquareView;
 
 @interface PlayfieldViewController : OUIViewController
 
+@property(nonatomic,weak) GridWindowController *gridWindowController;
 @property(nonatomic,strong) Playfield *playfield;
 
-- (void)dragUnitFromSquareView:(SquareView *)squareView withEvent:(NSEvent *)mouseDown;
+- (void)dragUnitFromSquareView:(SquareView *)sourceSquareView withEvent:(NSEvent *)mouseDown;
 
 @end
