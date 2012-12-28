@@ -116,6 +116,24 @@
     [trackingLoop run];
 }
 
+- (void)placeUnit:(Unit *)unit inSquareView:(SquareView *)squareView;
+{
+    PlayfieldView *view = (PlayfieldView *)self.view;
+    NSUInteger column, row;
+    
+    [view getRow:&row column:&column ofSquareView:squareView];
+    if (row == NSNotFound || column == NSNotFound) {
+        assert(0);
+        return;
+    }
+    if (column >= _playfield.width || row >= _playfield.height) {
+        assert(0);
+        return;
+    }
+    
+    NSLog(@"dragged to %ld, %ld", column, row);
+}
+
 #pragma mark - NSViewController subclass
 
 - (void)loadView;

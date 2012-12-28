@@ -64,6 +64,11 @@ static const CGFloat EdgeToPiecePadding = 8;
     squareView.layer.contents = image;
 }
 
+- (NSUInteger)indexOfSquareView:(SquareView *)squareView;
+{
+    return [_squareViews indexOfObject:squareView];
+}
+
 #pragma mark - NSView subclass
 
 - (CALayer *)makeBackingLayer;

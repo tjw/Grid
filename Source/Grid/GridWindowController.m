@@ -11,6 +11,8 @@
 #import "PlayfieldViewController.h"
 #import "DeckViewController.h"
 #import "Game.h"
+#import "SquareView.h"
+#import "Unit.h"
 
 @interface GridWindowController ()
 @property(nonatomic,readonly) PlayfieldViewController *playfieldViewController;
@@ -46,7 +48,15 @@
 
 - (void)userDraggedUnitFromDeckSquareView:(SquareView *)deckSquareView toPlayfieldSquare:(SquareView *)playfieldSquareView;
 {
-    NSLog(@"dragged");
+    // TODO: Check if the square is already filled
+    // TODO: Check if the source square can be dragged from (or possibly do this in a 'will' hook)
+    // TODO: Remove the unit from the deck
+    // TODO: Animations
+    
+    DeckViewController *deckController = [self deckControllerContainingSquareView:deckSquareView];
+    Unit *unit = [deckController unitForSquareView:deckSquareView];
+    
+    [_playfieldViewController placeUnit:unit inSquareView:playfieldSquareView];
 }
 
 #pragma mark - NSWindowController subclass
@@ -121,6 +131,17 @@
     NSView *view = self.window.contentView;
     if ([view hasAmbiguousLayout])
         [view exerciseAmbiguityInLayout];
+}
+
+- (DeckViewController *)deckControllerContainingSquareView:(SquareView *)squareView;
+{
+    if ([squareView isDescendantOf:_leftDeckViewController.view])
+        return _leftDeckViewController;
+    if ([squareView isDescendantOf:_rightDeckViewController.view])
+        return _rightDeckViewController;
+    
+    assert(0); // Shouldn't be asking...
+    return nil;
 }
 
 @end

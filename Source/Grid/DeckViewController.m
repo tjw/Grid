@@ -13,6 +13,7 @@
 #import "DeckViewDelegate.h"
 #import "Deck.h"
 #import "PlayfieldViewController.h"
+#import "Square.h"
 
 @interface NSView ()
 - (NSString *)_subtreeDescription;
@@ -43,6 +44,27 @@
     
     if (self.isViewLoaded)
         [self _updateDeck];
+}
+
+- (Unit *)unitForSquareView:(SquareView *)squareView;
+{
+    DeckView *deckView = (DeckView *)self.view;
+    NSUInteger squareIndex = [deckView indexOfSquareView:squareView];
+    if (squareIndex == NSNotFound) {
+        assert(0); // shouldn't be asking
+        return nil;
+    }
+    
+    if (squareIndex >= [_deck.squares count]) {
+        assert(0); // shouldn't be asking
+        return nil;
+    }
+    
+    Square *square = _deck.squares[squareIndex];
+    Unit *unit = square.unit;
+    
+    assert(unit);
+    return unit;
 }
 
 #pragma mark - NSViewController subclass

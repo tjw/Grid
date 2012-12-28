@@ -9,6 +9,7 @@
 #import <AppKit/NSView.h>
 
 @protocol DeckViewDelegate;
+@class SquareView;
 
 @interface DeckView : NSView
 
@@ -16,5 +17,7 @@
 
 @property(nonatomic) NSUInteger squareCount;
 - (void)setImage:(NSImage *)image forSquareAtIndex:(NSUInteger)squareIndex;
+
+- (NSUInteger)indexOfSquareView:(SquareView *)squareView;
 
 @end

@@ -8,9 +8,15 @@
 
 #import "OUIViewController.h"
 
+@class Unit;
+@class SquareView;
+
 @class PlayfieldViewController, Deck;
 
 @interface DeckViewController : OUIViewController
 @property(nonatomic,weak) PlayfieldViewController *playfieldController;
 @property(nonatomic) Deck *deck;
+
+- (Unit *)unitForSquareView:(SquareView *)squareView;
+
 @end

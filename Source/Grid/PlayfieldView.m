@@ -90,6 +90,20 @@ static const CGFloat EdgeToPiecePadding = 8;
     [self addConstraints:contraints];
 }
 
+- (void)getRow:(out NSUInteger *)outRow column:(out NSUInteger *)outColumn ofSquareView:(SquareView *)squareView;
+{
+    NSUInteger viewIndex = [_squareViews indexOfObject:squareView];
+    if (viewIndex == NSNotFound) {
+        assert(0); // shouldn't be asking
+        *outRow = NSNotFound;
+        *outColumn = NSNotFound;
+        return;
+    }
+
+    *outRow = viewIndex / _width;
+    *outColumn = viewIndex % _width;
+}
+
 // Takes a point in the receivers coordinate system (unlike -hitTest:).
 - (SquareView *)squareViewAtPoint:(NSPoint)point;
 {
