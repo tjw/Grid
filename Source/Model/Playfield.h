@@ -8,9 +8,17 @@
 
 #import <Foundation/NSObject.h>
 
+@class Unit;
+
 @interface Playfield : NSObject
 
 @property(nonatomic,readonly) NSUInteger width;
 @property(nonatomic,readonly) NSUInteger height;
+
+- (Unit *)unitAtColumn:(NSUInteger)column row:(NSUInteger)row;
+- (void)setUnit:(Unit *)unit atColumn:(NSUInteger)column row:(NSUInteger)row;
+
+- (void)addUnitObserver:(id)observer atColumn:(NSUInteger)column row:(NSUInteger)row context:(void *)context;
+- (void)removeUnitObserver:(id)observer atColumn:(NSUInteger)column row:(NSUInteger)row context:(void *)context;
 
 @end

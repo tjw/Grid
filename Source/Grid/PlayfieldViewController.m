@@ -19,6 +19,12 @@
 
 @implementation PlayfieldViewController
 
+- (void)dealloc;
+{
+    if (_playfield)
+        [self _stopObservingPlayfield:_playfield];
+}
+
 @synthesize gridWindowController = _weak_gridWindowController;
 
 - (void)setPlayfield:(Playfield *)playfield;
@@ -26,8 +32,14 @@
     if (_playfield == playfield)
         return;
     
+    if (_playfield)
+        [self _stopObservingPlayfield:_playfield];
+    
     _playfield = playfield;
     
+    if (_playfield)
+        [self _startObservingPlayfield:_playfield];
+
     if ([self isViewLoaded]) {
         PlayfieldView *view = (PlayfieldView *)self.view;
         [view resizeToWidth:_playfield.width height:_playfield.height];
@@ -131,7 +143,7 @@
         return;
     }
     
-    NSLog(@"dragged to %ld, %ld", column, row);
+    [_playfield setUnit:unit atColumn:column row:row];
 }
 
 #pragma mark - NSViewController subclass
@@ -150,6 +162,58 @@
         [view resizeToWidth:_playfield.width height:_playfield.height];
     
     self.view = view;
+}
+
+#pragma mark - NSKeyValueObserving
+
+static unsigned PlayfieldContext;
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context;
+{
+    if (context == &PlayfieldContext) {
+        NSLog(@"changed");
+        return;
+    }
+    
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+}
+
+#pragma mark - Private
+
+- (void)_startObservingPlayfield:(Playfield *)playfield;
+{
+    assert(playfield);
+    
+    // We assume the width and height cannot change.
+    NSUInteger width = playfield.width;
+    NSUInteger height = playfield.height;
+    
+    assert(width > 0);
+    assert(height > 0);
+    
+    for (NSUInteger column = 0; column < width; column++) {
+        for (NSUInteger row = 0; row < height; row++) {
+            [playfield addUnitObserver:self atColumn:column row:row context:&PlayfieldContext];
+        }
+    }
+}
+
+- (void)_stopObservingPlayfield:(Playfield *)playfield;
+{
+    assert(playfield);
+    
+    // We assume the width and height cannot change.
+    NSUInteger width = playfield.width;
+    NSUInteger height = playfield.height;
+    
+    assert(width > 0);
+    assert(height > 0);
+    
+    for (NSUInteger column = 0; column < width; column++) {
+        for (NSUInteger row = 0; row < height; row++) {
+            [playfield removeUnitObserver:self atColumn:column row:row context:&PlayfieldContext];
+        }
+    }
 }
 
 @end
