@@ -116,8 +116,10 @@
         [parentView addConstraint:yConstraint];
     };
     trackingLoop.up = ^{
-        [gridWindowController userDraggedUnitFromDeckSquareView:sourceSquareView toPlayfieldSquare:destinationSquareView];
-        destinationSquareView.isDragDestination = NO;
+        if (destinationSquareView) {
+            [gridWindowController userDraggedUnitFromDeckSquareView:sourceSquareView toPlayfieldSquare:destinationSquareView];
+            destinationSquareView.isDragDestination = NO;
+        }
         [draggingView removeFromSuperview];
         [parentView removeConstraint:xConstraint];
         [parentView removeConstraint:yConstraint];
