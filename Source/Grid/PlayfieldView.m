@@ -90,7 +90,16 @@ static const CGFloat EdgeToPiecePadding = 8;
     [self addConstraints:contraints];
 }
 
-- (void)getRow:(out NSUInteger *)outRow column:(out NSUInteger *)outColumn ofSquareView:(SquareView *)squareView;
+- (SquareView *)squareViewAtColumn:(NSUInteger)column row:(NSUInteger)row;
+{
+    assert(column < _width);
+    assert(row < _height);
+    
+    NSUInteger viewIndex = row * _width + column;
+    return _squareViews[viewIndex];
+}
+
+- (void)getColumn:(out NSUInteger *)outColumn row:(out NSUInteger *)outRow ofSquareView:(SquareView *)squareView;
 {
     NSUInteger viewIndex = [_squareViews indexOfObject:squareView];
     if (viewIndex == NSNotFound) {
@@ -100,8 +109,8 @@ static const CGFloat EdgeToPiecePadding = 8;
         return;
     }
 
-    *outRow = viewIndex / _width;
     *outColumn = viewIndex % _width;
+    *outRow = viewIndex / _width;
 }
 
 // Takes a point in the receivers coordinate system (unlike -hitTest:).

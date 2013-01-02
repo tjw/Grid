@@ -55,6 +55,16 @@
     [square removeObserver:observer forKeyPath:KeyPath(square, unit) context:context];
 }
 
+- (Unit *)unitForObservedObject:(id)observed column:(out NSUInteger *)outColumn row:(out NSUInteger *)outRow;
+{
+    Square *square = observed;
+    assert([square isKindOfClass:[Square class]]);
+    assert([_squares indexOfObject:observed] != NSNotFound);
+    
+    [self _getColumn:outColumn row:outRow forSquare:square];
+    return square.unit;
+}
+
 #pragma mark - Private
 
 - (Square *)_squareAtColumn:(NSUInteger)column row:(NSUInteger)row;
@@ -64,6 +74,18 @@
     
     NSUInteger idx = row * _width + column;
     return _squares[idx];
+}
+
+- (void)_getColumn:(out NSUInteger *)outColumn row:(out NSUInteger *)outRow forSquare:(Square *)square;
+{
+    assert(_width > 0);
+    assert(_height > 0);
+    
+    NSUInteger idx = [_squares indexOfObject:square];
+    assert(idx != NSNotFound);
+    
+    *outColumn = idx % _width;
+    *outRow = idx / _width;
 }
 
 @end

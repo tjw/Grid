@@ -135,7 +135,7 @@
     PlayfieldView *view = (PlayfieldView *)self.view;
     NSUInteger column, row;
     
-    [view getRow:&row column:&column ofSquareView:squareView];
+    [view getColumn:&column row:&row ofSquareView:squareView];
     if (row == NSNotFound || column == NSNotFound) {
         assert(0);
         return;
@@ -173,7 +173,17 @@ static unsigned PlayfieldContext;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context;
 {
     if (context == &PlayfieldContext) {
-        NSLog(@"changed");
+        // The object and keypath are private...
+        NSUInteger column, row;
+        Unit *unit = [_playfield unitForObservedObject:object column:&column row:&row];
+        PlayfieldView *view = (PlayfieldView *)self.view;
+        SquareView *squareView = [view squareViewAtColumn:column row:row];
+        
+        NSImage *image = [self _imageForUnit:unit];
+        
+        // TODO: Bad, accessing its layer.
+        squareView.layer.contents = image;
+        
         return;
     }
     
@@ -181,6 +191,15 @@ static unsigned PlayfieldContext;
 }
 
 #pragma mark - Private
+
+- (NSImage *)_imageForUnit:(Unit *)unit;
+{
+    // TODO: Something useful
+    if (unit)
+        return [NSImage imageNamed:@"Emitter"];
+    
+    return nil;
+}
 
 - (void)_startObservingPlayfield:(Playfield *)playfield;
 {
