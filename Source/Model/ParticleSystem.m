@@ -1,13 +1,13 @@
 //
-//  Particle.m
+//  ParticleSystem.m
 //  Grid
 //
 //  Created by Timothy J. Wood on 1/2/13.
 //  Copyright (c) 2013 Cocoatoa. All rights reserved.
 //
 
-#import "Particle.h"
+#import "ParticleSystem.h"
 
-@implementation Particle
+@implementation ParticleSystem
 
 @end
