@@ -12,7 +12,7 @@
 #import "SquareView.h"
 #import "DeckViewDelegate.h"
 #import "Deck.h"
-#import "PlayfieldViewController.h"
+#import "PlayfieldNodeController.h"
 #import "Square.h"
 
 @interface NSView ()
@@ -24,14 +24,6 @@
 @end
 
 @implementation DeckViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    if (!(self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
-        return nil;
-    
-    return self;
-}
 
 @synthesize playfieldController = _weak_playfieldController;
 
@@ -49,10 +41,9 @@ static unsigned UnitContext;
     
     for (Square *square in _deck.squares)
         [square addObserver:self forKeyPath:KeyPath(square, unit) options:0 context:&UnitContext];
-    
-    if (self.isViewLoaded) {
+
+    if (self.viewLoaded)
         [self _setupView];
-    }
 }
 
 - (Unit *)unitForSquareView:(SquareView *)squareView;
@@ -76,27 +67,21 @@ static unsigned UnitContext;
     return unit;
 }
 
-#pragma mark - NSViewController subclass
+#pragma mark - NSObject (NSNibAwaking)
 
-- (void)loadView;
+// We expect our view is setup in xib, so we don't have a -loadView
+- (void)awakeFromNib;
 {
-    DeckView *view = [[DeckView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    [super awakeFromNib];
+
+    DeckView *view = (DeckView *)self.view;
     view.translatesAutoresizingMaskIntoConstraints = NO;
     view.nextResponder = self;
     
     [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
     [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
-
+    
     view.delegate = self;
-    
-    
-    self.view = view;
-    assert(self.isViewLoaded);
-}
-
-- (void)viewDidLoad;
-{
-    [super viewDidLoad];
     
     if (_deck)
         [self _setupView];
@@ -106,7 +91,7 @@ static unsigned UnitContext;
 
 - (void)deckView:(DeckView *)deckView squareView:(SquareView *)squareView clicked:(NSEvent *)mouseDown;
 {
-    PlayfieldViewController *playfieldController = _weak_playfieldController;
+    PlayfieldNodeController *playfieldController = _weak_playfieldController;
     if (!playfieldController) {
         assert(0);
         return;

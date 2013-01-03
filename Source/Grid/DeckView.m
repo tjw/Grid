@@ -84,8 +84,6 @@ static const CGFloat EdgeToPiecePadding = 8;
 
 - (void)updateConstraints;
 {
-    assert(_squareViews);
-
     [super updateConstraints];
     
     NSDictionary *metrics = @{@"padding" : @(EdgeToPiecePadding)};

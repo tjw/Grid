@@ -2,8 +2,9 @@
 // Prefix header for all source files of the 'Grid' target in the 'Grid' project
 //
 
-#ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-#endif
+#import <Cocoa/Cocoa.h>
+#import <SceneKit/SceneKit.h>
+
+#define FinishPorting assert(0)
 
 #define KeyPath(object, keyPath) (NO && object.keyPath ? @#keyPath : @#keyPath)

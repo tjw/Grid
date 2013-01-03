@@ -10,11 +10,14 @@
 
 @class Game;
 @class SquareView;
+@class SquareNode;
 
 @interface GridWindowController : NSWindowController
 
+@property(nonatomic,readonly) SCNView *sceneView;
+
 @property(nonatomic,strong) Game *game;
 
-- (void)userDraggedUnitFromDeckSquareView:(SquareView *)deckSquareView toPlayfieldSquare:(SquareView *)playfieldSquareView;
+- (void)userDraggedUnitFromDeckSquareView:(SquareView *)deckSquareView toPlayfieldSquareNode:(SquareNode *)playfieldSquareNode;
 
 @end

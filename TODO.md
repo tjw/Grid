@@ -9,7 +9,19 @@
 * Extract model code to model
 * Add drop support to change model
 
-## v0.3 [current]
+## v0.3
+
+* Switch to SceneKit to display (since particle systems will be bad news with AppKit/auto layout).
+  * Research hit testing
+      * Array of `SCNHitTestResult` objects returned from `- hitTest:options:` (in the `SCNSceneRenderer` protocol, which `SCNView` conforms to).
+  * Research particle systems
+      * Can probably use a geometry with 'point' types
+      * Can maybe use a node render delegate
+    
+* Switch all sub view-controllers to be 'node' controllers
+* Merge `SceneKit` branch to master once this works again
+
+## v.4
 
 * Add game logic timer
 * Add particles

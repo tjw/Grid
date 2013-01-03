@@ -8,16 +8,19 @@
 
 #import "GridWindowController.h"
 
-#import "PlayfieldViewController.h"
+#import "PlayfieldNodeController.h"
 #import "DeckViewController.h"
 #import "Game.h"
-#import "SquareView.h"
 #import "Unit.h"
+#import "Parameters.h"
+#import "SquareView.h"
 
 @interface GridWindowController ()
-@property(nonatomic,readonly) PlayfieldViewController *playfieldViewController;
-@property(nonatomic,readonly) DeckViewController *leftDeckViewController;
-@property(nonatomic,readonly) DeckViewController *rightDeckViewController;
+@property(nonatomic) IBOutlet SCNView *sceneView;
+@property(nonatomic) IBOutlet DeckViewController *leftDeckViewController;
+@property(nonatomic) IBOutlet DeckViewController *rightDeckViewController;
+
+@property(nonatomic,readonly) PlayfieldNodeController *playfieldNodeController;
 @end
 
 @implementation GridWindowController
@@ -27,13 +30,9 @@
     if (!(self = [super initWithWindow:window]))
         return nil;
 
-    _playfieldViewController = [PlayfieldViewController new];
-    _leftDeckViewController = [DeckViewController new];
-    _rightDeckViewController = [DeckViewController new];
+    _playfieldNodeController = [PlayfieldNodeController new];
     
-    _playfieldViewController.gridWindowController = self;
-    _leftDeckViewController.playfieldController = _playfieldViewController;
-    _rightDeckViewController.playfieldController = _playfieldViewController;
+    _playfieldNodeController.gridWindowController = self;
 
     return self;
 }
@@ -41,12 +40,12 @@
 - (void)setGame:(Game *)game;
 {
     _game = game;
-    _playfieldViewController.playfield = game.playfield;
+    _playfieldNodeController.playfield = game.playfield;
     _leftDeckViewController.deck = game.leftDeck;
     _rightDeckViewController.deck = game.rightDeck;
 }
 
-- (void)userDraggedUnitFromDeckSquareView:(SquareView *)deckSquareView toPlayfieldSquare:(SquareView *)playfieldSquareView;
+- (void)userDraggedUnitFromDeckSquareView:(SquareView *)deckSquareView toPlayfieldSquareNode:(SquareNode *)playfieldSquareNode;
 {
     // TODO: Check if the square is already filled
     // TODO: Check if the source square can be dragged from (or possibly do this in a 'will' hook)
@@ -56,7 +55,7 @@
     DeckViewController *deckController = [self deckControllerContainingSquareView:deckSquareView];
     Unit *unit = [deckController unitForSquareView:deckSquareView];
     
-    [_playfieldViewController placeUnit:unit inSquareView:playfieldSquareView];
+    [_playfieldNodeController placeUnit:unit inSquareNode:playfieldSquareNode];
 }
 
 #pragma mark - NSWindowController subclass
@@ -65,16 +64,43 @@
 {
     [super windowDidLoad];
 
+    _leftDeckViewController.playfieldController = _playfieldNodeController;
+    _rightDeckViewController.playfieldController = _playfieldNodeController;
+    
+    _leftDeckViewController.deck = _game.leftDeck;
+    _rightDeckViewController.deck = _game.rightDeck;
+
     NSWindow *window = self.window;
     window.title = @"Grid";
     
-    NSView *view = window.contentView;
-    NSCAssert(view.layer, @"Should start with a layer");
-    view.layer.backgroundColor = [[NSColor blackColor] CGColor];
+    SCNScene *scene = [SCNScene scene];
     
-    NSView *playfield = _playfieldViewController.view;
-    [view addSubview:playfield];
+    SCNNode *rootNode = scene.rootNode;
+    assert(rootNode);
     
+    SCNNode *playfield = _playfieldNodeController.node;
+    [rootNode addChildNode:playfield];
+    
+    SCNCamera *camera = [SCNCamera camera];
+    //camera.usesOrthographicProjection = YES;
+    SCNNode *cameraNode = [SCNNode node];
+    cameraNode.camera = camera;
+    cameraNode.position = SCNVector3Make(0, 0, 20*kSquareSize);
+    cameraNode.name = @"camera";
+    [scene.rootNode addChildNode:cameraNode];
+    
+    SCNLight * ambientLight = [SCNLight light];
+    ambientLight.type = SCNLightTypeAmbient;
+    ambientLight.color = [NSColor whiteColor];
+    SCNNode *lightNode = [SCNNode node];
+    lightNode.light = ambientLight;
+    lightNode.name = @"light";
+    [scene.rootNode addChildNode:lightNode];
+
+    _sceneView.scene = scene;
+    _sceneView.autoenablesDefaultLighting = YES;
+    NSLog(@"add decks");
+#if 0
     NSView *leftDeck = _leftDeckViewController.view;
     [view addSubview:leftDeck];
     
@@ -113,8 +139,9 @@
     
     leftDeck.layer.backgroundColor = [[NSColor redColor] CGColor];
     rightDeck.layer.backgroundColor = [[NSColor blueColor] CGColor];
+#endif
     
-    _playfieldViewController.playfield = _game.playfield;
+    _playfieldNodeController.playfield = _game.playfield;
     
     [window center];
 }

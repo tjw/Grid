@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		343B2443169612EC00F24886 /* SquareNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 343B2442169612EC00F24886 /* SquareNode.m */; };
+		343B2446169615D400F24886 /* SCNView+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 343B2445169615D400F24886 /* SCNView+Extensions.m */; };
 		34549DD416671F7800C94097 /* Unit.m in Sources */ = {isa = PBXBuildFile; fileRef = 34549DD316671F7800C94097 /* Unit.m */; };
 		34549DD816671FA300C94097 /* Square.m in Sources */ = {isa = PBXBuildFile; fileRef = 34549DD716671FA300C94097 /* Square.m */; };
 		34549DDB16671FCC00C94097 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 34549DDA16671FCC00C94097 /* Player.m */; };
 		34549DDE16672BF900C94097 /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = 34549DDD16672BF900C94097 /* Deck.m */; };
 		3480BCCB1694E52A004A26B0 /* ParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3480BCCA1694E52A004A26B0 /* ParticleSystem.m */; };
+		3480BCCF1694F327004A26B0 /* NodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3480BCCE1694F327004A26B0 /* NodeController.m */; };
+		3480BCD11694FBA8004A26B0 /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3480BCD01694FBA8004A26B0 /* SceneKit.framework */; };
 		349EBCE21660793200DC45D3 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 349EBCE11660793200DC45D3 /* Cocoa.framework */; };
 		349EBCEC1660793200DC45D3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 349EBCEA1660793200DC45D3 /* InfoPlist.strings */; };
 		349EBCEE1660793200DC45D3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 349EBCED1660793200DC45D3 /* main.m */; };
@@ -20,9 +24,8 @@
 		349EBCF81660793200DC45D3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 349EBCF61660793200DC45D3 /* MainMenu.xib */; };
 		34F08084166079D400F3FB85 /* GridWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F08082166079D400F3FB85 /* GridWindowController.m */; };
 		34F08085166079D400F3FB85 /* GridWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34F08083166079D400F3FB85 /* GridWindowController.xib */; };
-		34F0808916607AD800F3FB85 /* PlayfieldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0808816607AD800F3FB85 /* PlayfieldViewController.m */; };
+		34F0808916607AD800F3FB85 /* PlayfieldNodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0808816607AD800F3FB85 /* PlayfieldNodeController.m */; };
 		34F0808C16607AE600F3FB85 /* DeckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0808B16607AE600F3FB85 /* DeckViewController.m */; };
-		34F0809316607C5E00F3FB85 /* PlayfieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0809216607C5E00F3FB85 /* PlayfieldView.m */; };
 		34F0809616607C9100F3FB85 /* DeckView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0809516607C9100F3FB85 /* DeckView.m */; };
 		34F080991660810400F3FB85 /* SquareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F080981660810400F3FB85 /* SquareView.m */; };
 		34F0809F166097AB00F3FB85 /* Emitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F0809E166097AB00F3FB85 /* Emitter.png */; };
@@ -33,6 +36,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		343B2441169612EC00F24886 /* SquareNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareNode.h; sourceTree = "<group>"; };
+		343B2442169612EC00F24886 /* SquareNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquareNode.m; sourceTree = "<group>"; };
+		343B2444169615D400F24886 /* SCNView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SCNView+Extensions.h"; sourceTree = "<group>"; };
+		343B2445169615D400F24886 /* SCNView+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SCNView+Extensions.m"; sourceTree = "<group>"; };
 		34549DD216671F7800C94097 /* Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unit.h; sourceTree = "<group>"; };
 		34549DD316671F7800C94097 /* Unit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Unit.m; sourceTree = "<group>"; };
 		34549DD616671FA300C94097 /* Square.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Square.h; sourceTree = "<group>"; };
@@ -43,6 +50,10 @@
 		34549DDD16672BF900C94097 /* Deck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Deck.m; sourceTree = "<group>"; };
 		3480BCC91694E52A004A26B0 /* ParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleSystem.h; sourceTree = "<group>"; };
 		3480BCCA1694E52A004A26B0 /* ParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticleSystem.m; sourceTree = "<group>"; };
+		3480BCCD1694F327004A26B0 /* NodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeController.h; sourceTree = "<group>"; };
+		3480BCCE1694F327004A26B0 /* NodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeController.m; sourceTree = "<group>"; };
+		3480BCD01694FBA8004A26B0 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
+		3480BCD216950548004A26B0 /* Parameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Parameters.h; sourceTree = "<group>"; };
 		349EBCDD1660793200DC45D3 /* Grid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		349EBCE11660793200DC45D3 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		349EBCE41660793200DC45D3 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -60,12 +71,10 @@
 		34F08081166079D400F3FB85 /* GridWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridWindowController.h; sourceTree = "<group>"; };
 		34F08082166079D400F3FB85 /* GridWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridWindowController.m; sourceTree = "<group>"; };
 		34F08083166079D400F3FB85 /* GridWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GridWindowController.xib; sourceTree = "<group>"; };
-		34F0808716607AD800F3FB85 /* PlayfieldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayfieldViewController.h; sourceTree = "<group>"; };
-		34F0808816607AD800F3FB85 /* PlayfieldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayfieldViewController.m; sourceTree = "<group>"; };
+		34F0808716607AD800F3FB85 /* PlayfieldNodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayfieldNodeController.h; sourceTree = "<group>"; };
+		34F0808816607AD800F3FB85 /* PlayfieldNodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayfieldNodeController.m; sourceTree = "<group>"; };
 		34F0808A16607AE600F3FB85 /* DeckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckViewController.h; sourceTree = "<group>"; };
 		34F0808B16607AE600F3FB85 /* DeckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckViewController.m; sourceTree = "<group>"; };
-		34F0809116607C5E00F3FB85 /* PlayfieldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayfieldView.h; sourceTree = "<group>"; };
-		34F0809216607C5E00F3FB85 /* PlayfieldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayfieldView.m; sourceTree = "<group>"; };
 		34F0809416607C9100F3FB85 /* DeckView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckView.h; sourceTree = "<group>"; };
 		34F0809516607C9100F3FB85 /* DeckView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckView.m; sourceTree = "<group>"; };
 		34F080971660810400F3FB85 /* SquareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareView.h; sourceTree = "<group>"; };
@@ -87,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3480BCD11694FBA8004A26B0 /* SceneKit.framework in Frameworks */,
 				349EBCE21660793200DC45D3 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -116,6 +126,7 @@
 		349EBCE01660793200DC45D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3480BCD01694FBA8004A26B0 /* SceneKit.framework */,
 				349EBCE11660793200DC45D3 /* Cocoa.framework */,
 				349EBCE31660793200DC45D3 /* Other Frameworks */,
 			);
@@ -154,10 +165,15 @@
 				349EBCED1660793200DC45D3 /* main.m */,
 				349EBCEF1660793200DC45D3 /* Grid-Prefix.pch */,
 				349EBCF01660793200DC45D3 /* Credits.rtf */,
+				3480BCD216950548004A26B0 /* Parameters.h */,
 				34F080A016609A8D00F3FB85 /* OATrackingLoop.h */,
 				34F080A116609A8D00F3FB85 /* OATrackingLoop.m */,
 				34F080AB1662A82E00F3FB85 /* OUIViewController.h */,
 				34F080AC1662A82E00F3FB85 /* OUIViewController.m */,
+				3480BCCD1694F327004A26B0 /* NodeController.h */,
+				3480BCCE1694F327004A26B0 /* NodeController.m */,
+				343B2444169615D400F24886 /* SCNView+Extensions.h */,
+				343B2445169615D400F24886 /* SCNView+Extensions.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -165,10 +181,10 @@
 		34F0808D16607BFC00F3FB85 /* Playfield */ = {
 			isa = PBXGroup;
 			children = (
-				34F0808716607AD800F3FB85 /* PlayfieldViewController.h */,
-				34F0808816607AD800F3FB85 /* PlayfieldViewController.m */,
-				34F0809116607C5E00F3FB85 /* PlayfieldView.h */,
-				34F0809216607C5E00F3FB85 /* PlayfieldView.m */,
+				34F0808716607AD800F3FB85 /* PlayfieldNodeController.h */,
+				34F0808816607AD800F3FB85 /* PlayfieldNodeController.m */,
+				343B2441169612EC00F24886 /* SquareNode.h */,
+				343B2442169612EC00F24886 /* SquareNode.m */,
 			);
 			name = Playfield;
 			sourceTree = "<group>";
@@ -313,9 +329,8 @@
 				349EBCEE1660793200DC45D3 /* main.m in Sources */,
 				349EBCF51660793200DC45D3 /* AppDelegate.m in Sources */,
 				34F08084166079D400F3FB85 /* GridWindowController.m in Sources */,
-				34F0808916607AD800F3FB85 /* PlayfieldViewController.m in Sources */,
+				34F0808916607AD800F3FB85 /* PlayfieldNodeController.m in Sources */,
 				34F0808C16607AE600F3FB85 /* DeckViewController.m in Sources */,
-				34F0809316607C5E00F3FB85 /* PlayfieldView.m in Sources */,
 				34F0809616607C9100F3FB85 /* DeckView.m in Sources */,
 				34F080991660810400F3FB85 /* SquareView.m in Sources */,
 				34F080A216609A8D00F3FB85 /* OATrackingLoop.m in Sources */,
@@ -327,6 +342,9 @@
 				34549DDB16671FCC00C94097 /* Player.m in Sources */,
 				34549DDE16672BF900C94097 /* Deck.m in Sources */,
 				3480BCCB1694E52A004A26B0 /* ParticleSystem.m in Sources */,
+				3480BCCF1694F327004A26B0 /* NodeController.m in Sources */,
+				343B2443169612EC00F24886 /* SquareNode.m in Sources */,
+				343B2446169615D400F24886 /* SCNView+Extensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

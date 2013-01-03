@@ -11,10 +11,11 @@
 @class Unit;
 @class SquareView;
 
-@class PlayfieldViewController, Deck;
+@class PlayfieldNodeController, Deck;
 
 @interface DeckViewController : OUIViewController
-@property(nonatomic,weak) PlayfieldViewController *playfieldController;
+
+@property(nonatomic,weak) PlayfieldNodeController *playfieldController;
 @property(nonatomic) Deck *deck;
 
 - (Unit *)unitForSquareView:(SquareView *)squareView;
