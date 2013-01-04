@@ -98,7 +98,7 @@
     [scene.rootNode addChildNode:lightNode];
 
     _sceneView.scene = scene;
-    _sceneView.autoenablesDefaultLighting = YES;
+//    _sceneView.autoenablesDefaultLighting = YES;
     NSLog(@"add decks");
 #if 0
     NSView *leftDeck = _leftDeckViewController.view;

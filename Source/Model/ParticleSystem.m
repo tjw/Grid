@@ -29,7 +29,7 @@
         
         CGFloat x = radius * cos(angle);
         CGFloat y = radius * sin(angle);
-        CGFloat z = 10;
+        CGFloat z = 2;
         
         _points[pointIndex] = SCNVector3Make(x, y, z);
     }

@@ -193,10 +193,12 @@ static NSString *_shaderSource(NSString *name)
         program.vertexShader = _shaderSource(@"Particle.vsh");
         program.fragmentShader = _shaderSource(@"Particle.fsh");
         
-        node.geometry.firstMaterial.program = program;
-        
         [program setSemantic:SCNModelViewProjectionTransform forSymbol:@"MVP" options:nil];
         [program setSemantic:SCNGeometrySourceSemanticVertex forSymbol:@"position" options:nil];
+        
+        SCNMaterial *material = [SCNMaterial material];
+        material.program = program;
+        node.geometry.materials = @[material];
         
         SquareNode *squareNode = [self _squareNodeAtColumn:column row:row];
         [squareNode addChildNode:node];
@@ -248,6 +250,17 @@ static unsigned PlayfieldContext;
 }
 
 #pragma mark - SCNProgramDelegate
+
+//- (BOOL)program:(SCNProgram*)program bindValueForSymbol:(NSString*)symbol atLocation:(unsigned int)location programID:(unsigned int)programID renderer:(SCNRenderer*)renderer;
+//{
+//    NSLog(@"bind %@", symbol);
+//    return NO;
+//}
+//
+//- (void)program:(SCNProgram*)program unbindValueForSymbol:(NSString*)symbol atLocation:(unsigned int)location programID:(unsigned int)programID renderer:(SCNRenderer*)renderer;
+//{
+//    NSLog(@"unbind %@", symbol);
+//}
 
 - (void)program:(SCNProgram *)program handleError:(NSError*)error;
 {
