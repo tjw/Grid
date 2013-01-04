@@ -16,4 +16,8 @@
 @property(nonatomic,readonly) Deck *leftDeck;
 @property(nonatomic,readonly) Deck *rightDeck;
 
+- (void)pause;
+- (void)unpause;
+@property(nonatomic,readonly,getter = isPaused) BOOL paused;
+
 @end

@@ -8,6 +8,13 @@
 
 #import "Square.h"
 
+#import "Unit.h"
+
 @implementation Square
+
+- (void)gameTick:(Game *)game;
+{
+    [_unit gameTick:game];
+}
 
 @end

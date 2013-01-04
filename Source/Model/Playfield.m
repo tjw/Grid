@@ -65,6 +65,12 @@
     return square.unit;
 }
 
+- (void)gameTick:(Game *)game;
+{
+    for (Square *square in _squares)
+        [square gameTick:game];
+}
+
 #pragma mark - Private
 
 - (Square *)_squareAtColumn:(NSUInteger)column row:(NSUInteger)row;

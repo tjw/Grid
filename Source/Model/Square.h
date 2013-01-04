@@ -8,8 +8,11 @@
 
 #import <Foundation/NSObject.h>
 
-@class Unit;
+@class Game, Unit;
 
 @interface Square : NSObject
 @property(nonatomic) Unit *unit;
+
+- (void)gameTick:(Game *)game;
+
 @end

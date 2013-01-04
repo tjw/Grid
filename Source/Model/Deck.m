@@ -31,4 +31,9 @@ static const NSUInteger DeckSize = 5;
     return self;
 }
 
+- (void)gameTick:(Game *)game;
+{
+    
+}
+
 @end

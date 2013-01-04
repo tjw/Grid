@@ -8,7 +8,7 @@
 
 #import <Foundation/NSObject.h>
 
-@class Unit;
+@class Unit, Game;
 
 @interface Playfield : NSObject
 
@@ -21,5 +21,7 @@
 - (void)addUnitObserver:(id)observer atColumn:(NSUInteger)column row:(NSUInteger)row context:(void *)context;
 - (void)removeUnitObserver:(id)observer atColumn:(NSUInteger)column row:(NSUInteger)row context:(void *)context;
 - (Unit *)unitForObservedObject:(id)observed column:(out NSUInteger *)outColumn row:(out NSUInteger *)outRow;
+
+- (void)gameTick:(Game *)game;
 
 @end

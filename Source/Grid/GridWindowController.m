@@ -143,6 +143,8 @@
     
     _playfieldNodeController.playfield = _game.playfield;
     
+    [_game unpause];
+    
     [window center];
 }
 

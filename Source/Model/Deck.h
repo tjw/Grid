@@ -6,8 +6,13 @@
 //  Copyright (c) 2012 Cocoatoa. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <Foundation/NSObject.h>
+
+@class Game;
 
 @interface Deck : NSObject
 @property(nonatomic,readonly) NSArray *squares;
+
+- (void)gameTick:(Game *)game;
+
 @end

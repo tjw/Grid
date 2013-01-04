@@ -15,4 +15,9 @@
     return @"Emitter";
 }
 
+- (void)gameTick:(Game *)game;
+{
+    NSLog(@"Unit tick %@", self);
+}
+
 @end
