@@ -24,6 +24,7 @@
 		349EBCF81660793200DC45D3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 349EBCF61660793200DC45D3 /* MainMenu.xib */; };
 		34AF66F016978D1C00E2C76F /* Particle.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 34AF66EB16978BC500E2C76F /* Particle.vsh */; };
 		34AF66F116978D1C00E2C76F /* Particle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 34AF66EE16978BD100E2C76F /* Particle.fsh */; };
+		34AF66F716979A1D00E2C76F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34AF66F616979A1D00E2C76F /* OpenGL.framework */; };
 		34F08084166079D400F3FB85 /* GridWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F08082166079D400F3FB85 /* GridWindowController.m */; };
 		34F08085166079D400F3FB85 /* GridWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34F08083166079D400F3FB85 /* GridWindowController.xib */; };
 		34F0808916607AD800F3FB85 /* PlayfieldNodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0808816607AD800F3FB85 /* PlayfieldNodeController.m */; };
@@ -71,6 +72,7 @@
 		349EBCF71660793200DC45D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		34AF66EB16978BC500E2C76F /* Particle.vsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = Particle.vsh; path = Programs/Particle.vsh; sourceTree = "<group>"; };
 		34AF66EE16978BD100E2C76F /* Particle.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = Particle.fsh; path = Programs/Particle.fsh; sourceTree = "<group>"; };
+		34AF66F616979A1D00E2C76F /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		34CF944416883D9800A940C0 /* DeckViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckViewDelegate.h; sourceTree = "<group>"; };
 		34F08081166079D400F3FB85 /* GridWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridWindowController.h; sourceTree = "<group>"; };
 		34F08082166079D400F3FB85 /* GridWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridWindowController.m; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34AF66F716979A1D00E2C76F /* OpenGL.framework in Frameworks */,
 				3480BCD11694FBA8004A26B0 /* SceneKit.framework in Frameworks */,
 				349EBCE21660793200DC45D3 /* Cocoa.framework in Frameworks */,
 			);
@@ -131,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				3480BCD01694FBA8004A26B0 /* SceneKit.framework */,
+				34AF66F616979A1D00E2C76F /* OpenGL.framework */,
 				349EBCE11660793200DC45D3 /* Cocoa.framework */,
 				349EBCE31660793200DC45D3 /* Other Frameworks */,
 			);

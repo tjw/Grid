@@ -15,7 +15,7 @@
 #import "Parameters.h"
 #import "SquareView.h"
 
-@interface GridWindowController ()
+@interface GridWindowController () <SCNSceneRendererDelegate>
 @property(nonatomic) IBOutlet SCNView *sceneView;
 @property(nonatomic) IBOutlet DeckViewController *leftDeckViewController;
 @property(nonatomic) IBOutlet DeckViewController *rightDeckViewController;
@@ -98,6 +98,8 @@
     [scene.rootNode addChildNode:lightNode];
 
     _sceneView.scene = scene;
+    _sceneView.delegate = self;
+    
 //    _sceneView.autoenablesDefaultLighting = YES;
     NSLog(@"add decks");
 #if 0
@@ -151,6 +153,13 @@
 - (NSString *)windowNibName;
 {
     return NSStringFromClass([self class]);
+}
+
+#pragma mark - SCNSceneRendererDelegate
+
+- (void)renderer:(id <SCNSceneRenderer>)aRenderer willRenderScene:(SCNScene *)scene atTime:(NSTimeInterval)time;
+{
+    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
 }
 
 #pragma mark - Private
