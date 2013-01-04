@@ -12,8 +12,9 @@
 
 @property(nonatomic,readonly) NSPoint origin;
 
-@property(nonatomic,readonly) NSUInteger count;
+@property(nonatomic,readonly) uint16 count;
+@property(nonatomic,readonly) SCNVector3 *points;
+
 // TODO: Time tick that updates positions
-// TODO: Getter that yields read-only buffer of positions, colors
 
 @end

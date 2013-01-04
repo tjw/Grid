@@ -15,6 +15,11 @@
 #import "SquareView.h"
 #import "SquareNode.h"
 #import "SCNView+Extensions.h"
+#import "ParticleSystem.h"
+#import "Unit.h"
+
+@interface PlayfieldNodeController () <SCNProgramDelegate>
+@end
 
 @implementation PlayfieldNodeController
 {
@@ -83,7 +88,7 @@
         
         CGPoint scenePoint = [parentView convertPoint:trackingLoop.currentMouseDraggedPointInView toView:sceneView];
         SCNHitTestResult *hitResult = [sceneView hitTest:scenePoint nodeClass:[SquareNode class]];
-        NSLog(@"hitResult = %@", hitResult);
+//        NSLog(@"hitResult = %@", hitResult);
         SquareNode *nearestSquareNode = (SquareNode *)hitResult.node;
         if (nearestSquareNode != destinationSquareNode) {
 //            destinationSquareNode.isDragDestination = NO;
@@ -133,6 +138,18 @@
     [trackingLoop run];
 }
 
+static NSString *_shaderSource(NSString *name)
+{
+    NSURL *fileURL = [[NSBundle mainBundle] URLForResource:[name stringByDeletingPathExtension] withExtension:[name pathExtension]];
+    assert(fileURL);
+
+    NSError *error;
+    NSString *source = [NSString stringWithContentsOfURL:fileURL encoding:NSUTF8StringEncoding error:&error];
+    if (!source)
+        NSLog(@"Error loading program source %@: %@", name, error);
+    return source;
+}
+
 - (void)placeUnit:(Unit *)unit inSquareNode:(SquareNode *)squareNode;
 {
     NSUInteger column = squareNode.column;
@@ -148,6 +165,42 @@
     }
     
     [_playfield setUnit:unit atColumn:column row:row];
+
+    // TODO: Should really hear about this via KVO or something so that the game tick can add/remove particle systems.
+    ParticleSystem *particleSystem = unit.particleSystem;
+    if (particleSystem) {
+        SCNNode *node = [SCNNode node];
+        node.name = @"particleSystem";
+        
+        uint16 vertexCount = particleSystem.count;
+        SCNGeometrySource *vertexSource = [SCNGeometrySource geometrySourceWithVertices:particleSystem.points count:vertexCount];
+        
+        // TODO: For point based particle systems, we could have a shared SCNGeometryElement instance.
+        NSUInteger vertexElementIndexesSize = vertexCount * sizeof(vertexCount);
+        uint16 *vertexElementIndexes = malloc(vertexElementIndexesSize);
+        
+        for (uint16 vertexIndex = 0; vertexIndex < vertexCount; vertexIndex++)
+            vertexElementIndexes[vertexIndex] = vertexIndex;
+        
+        NSData *vertexElementData = [NSData dataWithBytesNoCopy:vertexElementIndexes length:vertexElementIndexesSize freeWhenDone:YES];
+        
+        SCNGeometryElement *vertexElements = [SCNGeometryElement geometryElementWithData:vertexElementData primitiveType:SCNGeometryPrimitiveTypePoint primitiveCount:vertexCount bytesPerIndex:sizeof(vertexCount)];
+        node.geometry = [SCNGeometry geometryWithSources:@[vertexSource] elements:@[vertexElements]];
+                
+        // TODO: Share programs
+        SCNProgram *program = [SCNProgram program];
+        program.delegate = self;
+        program.vertexShader = _shaderSource(@"Particle.vsh");
+        program.fragmentShader = _shaderSource(@"Particle.fsh");
+        
+        node.geometry.firstMaterial.program = program;
+        
+        [program setSemantic:SCNModelViewProjectionTransform forSymbol:@"MVP" options:nil];
+        [program setSemantic:SCNGeometrySourceSemanticVertex forSymbol:@"position" options:nil];
+        
+        SquareNode *squareNode = [self _squareNodeAtColumn:column row:row];
+        [squareNode addChildNode:node];
+    }
 }
 
 #pragma mark - NodeController subclass
@@ -192,6 +245,13 @@ static unsigned PlayfieldContext;
     }
     
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+}
+
+#pragma mark - SCNProgramDelegate
+
+- (void)program:(SCNProgram *)program handleError:(NSError*)error;
+{
+    NSLog(@"Program %@ error: %@", program, error);
 }
 
 #pragma mark - Private

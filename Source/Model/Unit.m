@@ -8,6 +8,8 @@
 
 #import "Unit.h"
 
+#import "ParticleSystem.h"
+
 @implementation Unit
 
 - (NSString *)imageName;
@@ -15,9 +17,14 @@
     return @"Emitter";
 }
 
+- (void)willAddToPlayfield;
+{
+    _particleSystem = [[ParticleSystem alloc] init];
+}
+
 - (void)gameTick:(Game *)game;
 {
-    NSLog(@"Unit tick %@", self);
+//    NSLog(@"Unit tick %@", self);
 }
 
 @end

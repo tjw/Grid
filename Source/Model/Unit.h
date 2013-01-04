@@ -8,12 +8,15 @@
 
 #import <Foundation/NSObject.h>
 
-@class Game, Player;
+@class Game, Player, ParticleSystem;
 
 @interface Unit : NSObject
 @property(nonatomic) Player *owner;
-@property(nonatomic,readonly) NSString *imageName;
 
+@property(nonatomic,readonly) NSString *imageName;
+@property(nonatomic,readonly) ParticleSystem *particleSystem;
+
+- (void)willAddToPlayfield;
 - (void)gameTick:(Game *)game;
 
 @end

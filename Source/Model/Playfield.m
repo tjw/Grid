@@ -40,6 +40,10 @@
 - (void)setUnit:(Unit *)unit atColumn:(NSUInteger)column row:(NSUInteger)row;
 {
     Square *square = [self _squareAtColumn:column row:row];
+
+    // TODO: Add some way to make sure units are only in one square at a time?
+    [unit willAddToPlayfield];
+    
     square.unit = unit;
 }
 

@@ -22,6 +22,8 @@
 		349EBCF21660793200DC45D3 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 349EBCF01660793200DC45D3 /* Credits.rtf */; };
 		349EBCF51660793200DC45D3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 349EBCF41660793200DC45D3 /* AppDelegate.m */; };
 		349EBCF81660793200DC45D3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 349EBCF61660793200DC45D3 /* MainMenu.xib */; };
+		34AF66F016978D1C00E2C76F /* Particle.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 34AF66EB16978BC500E2C76F /* Particle.vsh */; };
+		34AF66F116978D1C00E2C76F /* Particle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 34AF66EE16978BD100E2C76F /* Particle.fsh */; };
 		34F08084166079D400F3FB85 /* GridWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F08082166079D400F3FB85 /* GridWindowController.m */; };
 		34F08085166079D400F3FB85 /* GridWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34F08083166079D400F3FB85 /* GridWindowController.xib */; };
 		34F0808916607AD800F3FB85 /* PlayfieldNodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0808816607AD800F3FB85 /* PlayfieldNodeController.m */; };
@@ -67,6 +69,8 @@
 		349EBCF31660793200DC45D3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		349EBCF41660793200DC45D3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		349EBCF71660793200DC45D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		34AF66EB16978BC500E2C76F /* Particle.vsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = Particle.vsh; path = Programs/Particle.vsh; sourceTree = "<group>"; };
+		34AF66EE16978BD100E2C76F /* Particle.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = Particle.fsh; path = Programs/Particle.fsh; sourceTree = "<group>"; };
 		34CF944416883D9800A940C0 /* DeckViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckViewDelegate.h; sourceTree = "<group>"; };
 		34F08081166079D400F3FB85 /* GridWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridWindowController.h; sourceTree = "<group>"; };
 		34F08082166079D400F3FB85 /* GridWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridWindowController.m; sourceTree = "<group>"; };
@@ -185,6 +189,8 @@
 				34F0808816607AD800F3FB85 /* PlayfieldNodeController.m */,
 				343B2441169612EC00F24886 /* SquareNode.h */,
 				343B2442169612EC00F24886 /* SquareNode.m */,
+				34AF66EB16978BC500E2C76F /* Particle.vsh */,
+				34AF66EE16978BD100E2C76F /* Particle.fsh */,
 			);
 			name = Playfield;
 			sourceTree = "<group>";
@@ -311,6 +317,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34AF66F016978D1C00E2C76F /* Particle.vsh in Resources */,
+				34AF66F116978D1C00E2C76F /* Particle.fsh in Resources */,
 				349EBCEC1660793200DC45D3 /* InfoPlist.strings in Resources */,
 				349EBCF21660793200DC45D3 /* Credits.rtf in Resources */,
 				349EBCF81660793200DC45D3 /* MainMenu.xib in Resources */,
