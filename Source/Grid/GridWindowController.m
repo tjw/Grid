@@ -160,6 +160,8 @@
 - (void)renderer:(id <SCNSceneRenderer>)aRenderer willRenderScene:(SCNScene *)scene atTime:(NSTimeInterval)time;
 {
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+    
+    [_playfieldNodeController updateParticleSystems];
 }
 
 #pragma mark - Private

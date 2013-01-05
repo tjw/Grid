@@ -24,7 +24,7 @@
 
 - (void)gameTick:(Game *)game;
 {
-//    NSLog(@"Unit tick %@", self);
+    [_particleSystem gameTick:game];
 }
 
 @end

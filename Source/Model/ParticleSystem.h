@@ -8,13 +8,13 @@
 
 #import <Foundation/NSObject.h>
 
+@class Game;
+
 @interface ParticleSystem : NSObject
 
-@property(nonatomic,readonly) NSPoint origin;
+@property(nonatomic,readonly) uint16 activeParticles;
+@property(nonatomic,readonly) const SCNVector3 *positions;
 
-@property(nonatomic,readonly) uint16 count;
-@property(nonatomic,readonly) SCNVector3 *points;
-
-// TODO: Time tick that updates positions
+- (void)gameTick:(Game *)game;
 
 @end

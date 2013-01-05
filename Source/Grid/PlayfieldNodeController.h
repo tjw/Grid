@@ -22,4 +22,6 @@
 
 - (void)placeUnit:(Unit *)unit inSquareNode:(SquareNode *)squareNode;
 
+- (void)updateParticleSystems;
+
 @end

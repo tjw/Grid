@@ -17,6 +17,7 @@
 #import "SCNView+Extensions.h"
 #import "ParticleSystem.h"
 #import "Unit.h"
+#import "ParticleSystemNode.h"
 
 @interface PlayfieldNodeController () <SCNProgramDelegate>
 @end
@@ -25,6 +26,38 @@
 {
     NSUInteger _width, _height;
     NSArray *_squareNodes;
+    
+    SCNProgram *_particleSystemProgram;
+    NSMutableArray *_particleSystemNodes;
+}
+
+static NSString *_shaderSource(NSString *name)
+{
+    NSURL *fileURL = [[NSBundle mainBundle] URLForResource:[name stringByDeletingPathExtension] withExtension:[name pathExtension]];
+    assert(fileURL);
+    
+    NSError *error;
+    NSString *source = [NSString stringWithContentsOfURL:fileURL encoding:NSUTF8StringEncoding error:&error];
+    if (!source)
+        NSLog(@"Error loading program source %@: %@", name, error);
+    return source;
+}
+
+- init;
+{
+    if (!(self = [super init]))
+        return nil;
+    
+    // TODO: Share programs
+    _particleSystemProgram = [SCNProgram program];
+    _particleSystemProgram.delegate = self;
+    _particleSystemProgram.vertexShader = _shaderSource(@"Particle.vsh");
+    _particleSystemProgram.fragmentShader = _shaderSource(@"Particle.fsh");
+    
+    [_particleSystemProgram setSemantic:SCNModelViewProjectionTransform forSymbol:@"MVP" options:nil];
+    [_particleSystemProgram setSemantic:SCNGeometrySourceSemanticVertex forSymbol:@"position" options:nil];
+    
+    return self;
 }
 
 - (void)dealloc;
@@ -138,18 +171,6 @@
     [trackingLoop run];
 }
 
-static NSString *_shaderSource(NSString *name)
-{
-    NSURL *fileURL = [[NSBundle mainBundle] URLForResource:[name stringByDeletingPathExtension] withExtension:[name pathExtension]];
-    assert(fileURL);
-
-    NSError *error;
-    NSString *source = [NSString stringWithContentsOfURL:fileURL encoding:NSUTF8StringEncoding error:&error];
-    if (!source)
-        NSLog(@"Error loading program source %@: %@", name, error);
-    return source;
-}
-
 - (void)placeUnit:(Unit *)unit inSquareNode:(SquareNode *)squareNode;
 {
     NSUInteger column = squareNode.column;
@@ -169,39 +190,25 @@ static NSString *_shaderSource(NSString *name)
     // TODO: Should really hear about this via KVO or something so that the game tick can add/remove particle systems.
     ParticleSystem *particleSystem = unit.particleSystem;
     if (particleSystem) {
-        SCNNode *node = [SCNNode node];
+        ParticleSystemNode *node = (ParticleSystemNode *)[ParticleSystemNode node];
+        node.particleSystem = particleSystem;
         node.name = @"particleSystem";
         
-        uint16 vertexCount = particleSystem.count;
-        SCNGeometrySource *vertexSource = [SCNGeometrySource geometrySourceWithVertices:particleSystem.points count:vertexCount];
-        
-        // TODO: For point based particle systems, we could have a shared SCNGeometryElement instance.
-        NSUInteger vertexElementIndexesSize = vertexCount * sizeof(vertexCount);
-        uint16 *vertexElementIndexes = malloc(vertexElementIndexesSize);
-        
-        for (uint16 vertexIndex = 0; vertexIndex < vertexCount; vertexIndex++)
-            vertexElementIndexes[vertexIndex] = vertexIndex;
-        
-        NSData *vertexElementData = [NSData dataWithBytesNoCopy:vertexElementIndexes length:vertexElementIndexesSize freeWhenDone:YES];
-        
-        SCNGeometryElement *vertexElements = [SCNGeometryElement geometryElementWithData:vertexElementData primitiveType:SCNGeometryPrimitiveTypePoint primitiveCount:vertexCount bytesPerIndex:sizeof(vertexCount)];
-        node.geometry = [SCNGeometry geometryWithSources:@[vertexSource] elements:@[vertexElements]];
+        [self _updateNode:node forParticleSystem:particleSystem];
                 
-        // TODO: Share programs
-        SCNProgram *program = [SCNProgram program];
-        program.delegate = self;
-        program.vertexShader = _shaderSource(@"Particle.vsh");
-        program.fragmentShader = _shaderSource(@"Particle.fsh");
-        
-        [program setSemantic:SCNModelViewProjectionTransform forSymbol:@"MVP" options:nil];
-        [program setSemantic:SCNGeometrySourceSemanticVertex forSymbol:@"position" options:nil];
-        
-        SCNMaterial *material = [SCNMaterial material];
-        material.program = program;
-        node.geometry.materials = @[material];
-        
         SquareNode *squareNode = [self _squareNodeAtColumn:column row:row];
         [squareNode addChildNode:node];
+        
+        if (!_particleSystemNodes)
+            _particleSystemNodes = [NSMutableArray new];
+        [_particleSystemNodes addObject:node];
+    }
+}
+
+- (void)updateParticleSystems;
+{
+    for (ParticleSystemNode *node in _particleSystemNodes) {
+        [self _updateNode:node forParticleSystem:node.particleSystem];
     }
 }
 
@@ -250,17 +257,6 @@ static unsigned PlayfieldContext;
 }
 
 #pragma mark - SCNProgramDelegate
-
-//- (BOOL)program:(SCNProgram*)program bindValueForSymbol:(NSString*)symbol atLocation:(unsigned int)location programID:(unsigned int)programID renderer:(SCNRenderer*)renderer;
-//{
-//    NSLog(@"bind %@", symbol);
-//    return NO;
-//}
-//
-//- (void)program:(SCNProgram*)program unbindValueForSymbol:(NSString*)symbol atLocation:(unsigned int)location programID:(unsigned int)programID renderer:(SCNRenderer*)renderer;
-//{
-//    NSLog(@"unbind %@", symbol);
-//}
 
 - (void)program:(SCNProgram *)program handleError:(NSError*)error;
 {
@@ -381,36 +377,31 @@ static unsigned PlayfieldContext;
     return node;
 }
 
+- (void)_updateNode:(SCNNode *)node forParticleSystem:(ParticleSystem *)particleSystem;
+{
+    uint16 vertexCount = particleSystem.activeParticles;
+    SCNGeometrySource *vertexSource = [SCNGeometrySource geometrySourceWithVertices:particleSystem.positions count:vertexCount];
+    
+    // TODO: For point based particle systems, we could have a shared SCNGeometryElement instance.
+    NSUInteger vertexElementIndexesSize = vertexCount * sizeof(vertexCount);
+    uint16 *vertexElementIndexes = malloc(vertexElementIndexesSize);
+    
+    for (uint16 vertexIndex = 0; vertexIndex < vertexCount; vertexIndex++)
+        vertexElementIndexes[vertexIndex] = vertexIndex;
+    
+    NSData *vertexElementData = [NSData dataWithBytesNoCopy:vertexElementIndexes length:vertexElementIndexesSize freeWhenDone:YES];
+    
+    SCNGeometryElement *vertexElements = [SCNGeometryElement geometryElementWithData:vertexElementData primitiveType:SCNGeometryPrimitiveTypePoint primitiveCount:vertexCount bytesPerIndex:sizeof(vertexCount)];
+    node.geometry = [SCNGeometry geometryWithSources:@[vertexSource] elements:@[vertexElements]];
+    
+    SCNMaterial *material = [SCNMaterial material];
+    material.program = _particleSystemProgram;
+    node.geometry.materials = @[material];
+}
 
 #if 0
 
-- (void)getColumn:(out NSUInteger *)outColumn row:(out NSUInteger *)outRow ofSquareView:(SquareView *)squareView;
-{
-    NSUInteger viewIndex = [_squareViews indexOfObject:squareView];
-    if (viewIndex == NSNotFound) {
-        assert(0); // shouldn't be asking
-        *outRow = NSNotFound;
-        *outColumn = NSNotFound;
-        return;
-    }
-    
-    *outColumn = viewIndex % _width;
-    *outRow = viewIndex / _width;
-}
-
-// Takes a point in the receivers coordinate system (unlike -hitTest:).
-- (SquareView *)squareViewAtPoint:(NSPoint)point;
-{
-    assert(self.superview);
-    NSView *view = [self hitTest:[self convertPoint:point toView:self.superview]];
-    
-    while (view && view != self) {
-        if ([view isKindOfClass:[SquareView class]])
-            return (SquareView *)view;
-        view = view.superview;
-    }
-    return nil;
-}
+// TODO: Still don't have an equivalent of this in SceneKit terms -- probably need to add an extra bounding volume node
 
 // Takes a point in the receivers coordinate system (unlike -hitTest:).
 - (SquareView *)squareViewNearestPoint:(NSPoint)point;

@@ -1,14 +1,20 @@
-## v.4 [current]
+## v.5 [current]
 
-* Add game logic timer
-* Add particles
+* Fix sometimes disappearing deck views
+* Add notion of players (unit.player)
+* Add influence (square.influence)
+* Adjust influence based off particles
+* Animate particles
 
 ## vN
 
-* Add influence (needs some notion of players)
 * Write model in server language
-* Add display timer
 * Add more piece types
+
+## v.4
+
+* Add game logic timer
+* Add particles
 
 ## v0.3
 
