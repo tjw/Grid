@@ -8,19 +8,16 @@
 
 #import <Foundation/NSObject.h>
 
-@class Unit, Game;
+@class Unit, Game, Square;
 
 @interface Playfield : NSObject
 
 @property(nonatomic,readonly) NSUInteger width;
 @property(nonatomic,readonly) NSUInteger height;
 
+- (Square *)squareAtColumn:(NSUInteger)column row:(NSUInteger)row;
 - (Unit *)unitAtColumn:(NSUInteger)column row:(NSUInteger)row;
 - (void)setUnit:(Unit *)unit atColumn:(NSUInteger)column row:(NSUInteger)row;
-
-- (void)addUnitObserver:(id)observer atColumn:(NSUInteger)column row:(NSUInteger)row context:(void *)context;
-- (void)removeUnitObserver:(id)observer atColumn:(NSUInteger)column row:(NSUInteger)row context:(void *)context;
-- (Unit *)unitForObservedObject:(id)observed column:(out NSUInteger *)outColumn row:(out NSUInteger *)outRow;
 
 - (void)gameTick:(Game *)game;
 

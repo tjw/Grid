@@ -11,7 +11,14 @@
 @class Game, Unit;
 
 @interface Square : NSObject
+
+- initWithColumn:(NSUInteger)column row:(NSUInteger)row;
+
+@property(nonatomic,readonly) NSUInteger column;
+@property(nonatomic,readonly) NSUInteger row;
+
 @property(nonatomic) Unit *unit;
+@property(nonatomic) int32_t influence;
 
 - (void)gameTick:(Game *)game;
 

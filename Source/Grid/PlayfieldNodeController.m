@@ -18,6 +18,7 @@
 #import "ParticleSystem.h"
 #import "Unit.h"
 #import "ParticleSystemNode.h"
+#import "Square.h"
 
 @interface PlayfieldNodeController () <SCNProgramDelegate>
 @end
@@ -236,20 +237,24 @@ static NSString *_shaderSource(NSString *name)
 
 #pragma mark - NSKeyValueObserving
 
-static unsigned PlayfieldContext;
+static unsigned SquareContext;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context;
 {
-    if (context == &PlayfieldContext) {
-        // The object and keypath are private...
-        NSUInteger column, row;
-        Unit *unit = [_playfield unitForObservedObject:object column:&column row:&row];
-        SquareNode *squareNode = [self _squareNodeAtColumn:column row:row];
+    if (context == &SquareContext) {
+        assert([object isKindOfClass:[Square class]]);
+        Square *square = object;
         
-        NSImage *image = [self _imageForUnit:unit];
+        if ([keyPath isEqual:KeyPath(square,unit)]) {
+            Unit *unit = square.unit;
+            SquareNode *squareNode = [self _squareNodeAtColumn:square.column row:square.row];
+            
+            NSImage *image = [self _imageForUnit:unit];
+            
+            // TODO: Bad, accessing its layer.
+            squareNode.geometry.firstMaterial.diffuse.contents = image;
+        }
         
-        // TODO: Bad, accessing its layer.
-        squareNode.geometry.firstMaterial.diffuse.contents = image;
         return;
     }
     
@@ -287,7 +292,8 @@ static unsigned PlayfieldContext;
     
     for (NSUInteger column = 0; column < width; column++) {
         for (NSUInteger row = 0; row < height; row++) {
-            [playfield addUnitObserver:self atColumn:column row:row context:&PlayfieldContext];
+            Square *square = [playfield squareAtColumn:column row:row];
+            [square addObserver:self forKeyPath:KeyPath(square,unit) options:0 context:&SquareContext];
         }
     }
 }
@@ -305,7 +311,8 @@ static unsigned PlayfieldContext;
     
     for (NSUInteger column = 0; column < width; column++) {
         for (NSUInteger row = 0; row < height; row++) {
-            [playfield removeUnitObserver:self atColumn:column row:row context:&PlayfieldContext];
+            Square *square = [playfield squareAtColumn:column row:row];
+            [square removeObserver:self forKeyPath:KeyPath(square,unit) context:&SquareContext];
         }
     }
 }
