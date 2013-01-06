@@ -11,7 +11,10 @@
 @class Game, Player, ParticleSystem;
 
 @interface Unit : NSObject
-@property(nonatomic) Player *owner;
+
+- initWithOwner:(Player *)owner;
+
+@property(nonatomic,readonly,weak) Player *owner;
 
 @property(nonatomic,readonly) NSString *imageName;
 @property(nonatomic,readonly) ParticleSystem *particleSystem;

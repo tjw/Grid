@@ -9,8 +9,8 @@
 #import "Game.h"
 
 #import "Playfield.h"
-#import "Deck.h"
 #import "Parameters.h"
+#import "Player.h"
 
 @implementation Game
 {
@@ -24,9 +24,9 @@
         return nil;
     
     _pauseCounter = 1; // Start paused
-    _playfield = [[Playfield alloc] init];
-    _leftDeck = [[Deck alloc] init];
-    _rightDeck = [[Deck alloc] init];
+    _playfield = [Playfield new];
+    _leftPlayer = [Player new];
+    _rightPlayer = [Player new];
     
     return self;
 }
@@ -78,8 +78,8 @@
 
 - (void)_tickTimerFired:(NSTimer *)timer;
 {
-    [_leftDeck gameTick:self];
-    [_rightDeck gameTick:self];
+    [_leftPlayer gameTick:self];
+    [_rightPlayer gameTick:self];
     [_playfield gameTick:self];
 }
 

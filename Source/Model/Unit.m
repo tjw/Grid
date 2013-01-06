@@ -12,6 +12,25 @@
 
 @implementation Unit
 
+- init;
+{
+    assert(0); // Use -initWithOwner:
+}
+
+- initWithOwner:(Player *)owner;
+{
+    assert(owner);
+    
+    if (!(self = [super init]))
+        return nil;
+    
+    _weak_owner = owner;
+    
+    return self;
+}
+
+@synthesize owner = _weak_owner;
+
 - (NSString *)imageName;
 {
     return @"Emitter";

@@ -8,6 +8,23 @@
 
 #import "Player.h"
 
+#import "Deck.h"
+
 @implementation Player
+
+- init;
+{
+    if (!(self = [super init]))
+        return nil;
+
+    _deck = [[Deck alloc] initWithOwner:self];
+    
+    return self;
+}
+
+- (void)gameTick:(Game *)game;
+{
+    [_deck gameTick:game];
+}
 
 @end

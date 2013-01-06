@@ -14,6 +14,7 @@
 #import "Unit.h"
 #import "Parameters.h"
 #import "SquareView.h"
+#import "Player.h"
 
 @interface GridWindowController () <SCNSceneRendererDelegate>
 @property(nonatomic) IBOutlet SCNView *sceneView;
@@ -41,8 +42,8 @@
 {
     _game = game;
     _playfieldNodeController.playfield = game.playfield;
-    _leftDeckViewController.deck = game.leftDeck;
-    _rightDeckViewController.deck = game.rightDeck;
+    _leftDeckViewController.deck = game.leftPlayer.deck;
+    _rightDeckViewController.deck = game.rightPlayer.deck;
 }
 
 - (void)userDraggedUnitFromDeckSquareView:(SquareView *)deckSquareView toPlayfieldSquareNode:(SquareNode *)playfieldSquareNode;
@@ -67,8 +68,8 @@
     _leftDeckViewController.playfieldController = _playfieldNodeController;
     _rightDeckViewController.playfieldController = _playfieldNodeController;
     
-    _leftDeckViewController.deck = _game.leftDeck;
-    _rightDeckViewController.deck = _game.rightDeck;
+    _leftDeckViewController.deck = _game.leftPlayer.deck;
+    _rightDeckViewController.deck = _game.rightPlayer.deck;
 
     NSWindow *window = self.window;
     window.title = @"Grid";

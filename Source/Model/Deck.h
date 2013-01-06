@@ -8,9 +8,14 @@
 
 #import <Foundation/NSObject.h>
 
-@class Game;
+@class Game, Player;
 
 @interface Deck : NSObject
+
+- initWithOwner:(Player *)owner;
+
+@property(nonatomic,readonly,weak) Player *owner;
+
 @property(nonatomic,readonly) NSArray *squares;
 
 - (void)gameTick:(Game *)game;
