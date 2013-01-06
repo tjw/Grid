@@ -13,7 +13,7 @@
 #import "DeckViewDelegate.h"
 #import "Deck.h"
 #import "PlayfieldNodeController.h"
-#import "Square.h"
+#import "DeckSlot.h"
 
 @interface NSView ()
 - (NSString *)_subtreeDescription;
@@ -34,13 +34,13 @@ static unsigned UnitContext;
     if (_deck == deck)
         return;
     
-    for (Square *square in _deck.squares)
-        [square removeObserver:self forKeyPath:KeyPath(square, unit) context:&UnitContext];
+    for (DeckSlot *slot in _deck.slots)
+        [slot removeObserver:self forKeyPath:KeyPath(slot, unit) context:&UnitContext];
     
     _deck = deck;
     
-    for (Square *square in _deck.squares)
-        [square addObserver:self forKeyPath:KeyPath(square, unit) options:0 context:&UnitContext];
+    for (DeckSlot *slot in _deck.slots)
+        [slot addObserver:self forKeyPath:KeyPath(slot, unit) options:0 context:&UnitContext];
 
     if (self.viewLoaded)
         [self _setupView];
@@ -49,19 +49,19 @@ static unsigned UnitContext;
 - (Unit *)unitForSquareView:(SquareView *)squareView;
 {
     DeckView *deckView = (DeckView *)self.view;
-    NSUInteger squareIndex = [deckView indexOfSquareView:squareView];
-    if (squareIndex == NSNotFound) {
+    NSUInteger slotIndex = [deckView indexOfSquareView:squareView];
+    if (slotIndex == NSNotFound) {
         assert(0); // shouldn't be asking
         return nil;
     }
     
-    if (squareIndex >= [_deck.squares count]) {
+    if (slotIndex >= [_deck.slots count]) {
         assert(0); // shouldn't be asking
         return nil;
     }
     
-    Square *square = _deck.squares[squareIndex];
-    Unit *unit = square.unit;
+    DeckSlot *slot = _deck.slots[slotIndex];
+    Unit *unit = slot.unit;
     
     assert(unit);
     return unit;
@@ -108,11 +108,10 @@ static unsigned UnitContext;
     assert(_deck);
     
     DeckView *view = (DeckView *)self.view;
-    view.squareCount = [_deck.squares count];
+    view.squareCount = [_deck.slots count];
     
-    for (Square *square in _deck.squares) {
-        [self _squareChanged:square];
-    }
+    for (DeckSlot *slot in _deck.slots)
+        [self _slotChanged:slot];
 }
 
 - (NSImage *)_imageForUnit:(Unit *)unit;
@@ -124,19 +123,19 @@ static unsigned UnitContext;
     return nil;
 }
 
-- (void)_squareChanged:(Square *)square;
+- (void)_slotChanged:(DeckSlot *)slot;
 {
     assert([self isViewLoaded]);
     assert(_deck);
-    assert(square);
+    assert(slot);
     
     DeckView *view = (DeckView *)self.view;
-    Unit *unit = square.unit;
+    Unit *unit = slot.unit;
     
-    NSUInteger squareIndex = [_deck.squares indexOfObject:square];
-    assert(squareIndex != NSNotFound);
+    NSUInteger slotIndex = [_deck.slots indexOfObject:slot];
+    assert(slotIndex != NSNotFound);
 
-    [view setImage:[self _imageForUnit:unit] forSquareAtIndex:squareIndex];
+    [view setImage:[self _imageForUnit:unit] forSquareAtIndex:slotIndex];
 }
 
 @end

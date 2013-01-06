@@ -16,7 +16,7 @@
 
 @property(nonatomic,readonly,weak) Player *owner;
 
-@property(nonatomic,readonly) NSArray *squares;
+@property(nonatomic,readonly) NSArray *slots;
 
 - (void)gameTick:(Game *)game;
 

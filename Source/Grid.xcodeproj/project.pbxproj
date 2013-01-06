@@ -26,6 +26,7 @@
 		34AF66F116978D1C00E2C76F /* Particle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 34AF66EE16978BD100E2C76F /* Particle.fsh */; };
 		34AF66F716979A1D00E2C76F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34AF66F616979A1D00E2C76F /* OpenGL.framework */; };
 		34AF66FA169818BC00E2C76F /* ParticleSystemNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 34AF66F9169818BC00E2C76F /* ParticleSystemNode.m */; };
+		34AF66FD16995C7100E2C76F /* DeckSlot.m in Sources */ = {isa = PBXBuildFile; fileRef = 34AF66FC16995C7100E2C76F /* DeckSlot.m */; };
 		34F08084166079D400F3FB85 /* GridWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F08082166079D400F3FB85 /* GridWindowController.m */; };
 		34F08085166079D400F3FB85 /* GridWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34F08083166079D400F3FB85 /* GridWindowController.xib */; };
 		34F0808916607AD800F3FB85 /* PlayfieldNodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0808816607AD800F3FB85 /* PlayfieldNodeController.m */; };
@@ -76,6 +77,8 @@
 		34AF66F616979A1D00E2C76F /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		34AF66F8169818BC00E2C76F /* ParticleSystemNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleSystemNode.h; sourceTree = "<group>"; };
 		34AF66F9169818BC00E2C76F /* ParticleSystemNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticleSystemNode.m; sourceTree = "<group>"; };
+		34AF66FB16995C7100E2C76F /* DeckSlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckSlot.h; sourceTree = "<group>"; };
+		34AF66FC16995C7100E2C76F /* DeckSlot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckSlot.m; sourceTree = "<group>"; };
 		34CF944416883D9800A940C0 /* DeckViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckViewDelegate.h; sourceTree = "<group>"; };
 		34F08081166079D400F3FB85 /* GridWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridWindowController.h; sourceTree = "<group>"; };
 		34F08082166079D400F3FB85 /* GridWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridWindowController.m; sourceTree = "<group>"; };
@@ -269,6 +272,8 @@
 				34549DDA16671FCC00C94097 /* Player.m */,
 				34549DDC16672BF900C94097 /* Deck.h */,
 				34549DDD16672BF900C94097 /* Deck.m */,
+				34AF66FB16995C7100E2C76F /* DeckSlot.h */,
+				34AF66FC16995C7100E2C76F /* DeckSlot.m */,
 				3480BCC91694E52A004A26B0 /* ParticleSystem.h */,
 				3480BCCA1694E52A004A26B0 /* ParticleSystem.m */,
 			);
@@ -363,6 +368,7 @@
 				343B2443169612EC00F24886 /* SquareNode.m in Sources */,
 				343B2446169615D400F24886 /* SCNView+Extensions.m in Sources */,
 				34AF66FA169818BC00E2C76F /* ParticleSystemNode.m in Sources */,
+				34AF66FD16995C7100E2C76F /* DeckSlot.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

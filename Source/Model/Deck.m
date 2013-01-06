@@ -8,8 +8,8 @@
 
 #import "Deck.h"
 
-#import "Square.h"
 #import "Unit.h"
+#import "DeckSlot.h"
 
 static const NSUInteger DeckSize = 5;
 
@@ -29,13 +29,13 @@ static const NSUInteger DeckSize = 5;
     
     _weak_owner = owner;
     
-    NSMutableArray *squares = [NSMutableArray new];
-    for (NSUInteger squareIndex = 0; squareIndex < DeckSize; squareIndex++) {
-        Square *square = [Square new];
-        square.unit = [[Unit alloc] initWithOwner:owner];
-        [squares addObject:square];
+    NSMutableArray *slots = [NSMutableArray new];
+    for (NSUInteger slotIndex = 0; slotIndex < DeckSize; slotIndex++) {
+        DeckSlot *slot = [DeckSlot new];
+        slot.unit = [[Unit alloc] initWithOwner:owner];
+        [slots addObject:slot];
     }
-    _squares = [squares copy];
+    _slots = [slots copy];
     
     return self;
 }
