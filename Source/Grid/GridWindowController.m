@@ -99,49 +99,14 @@
 
     _sceneView.scene = scene;
     _sceneView.delegate = self;
+    //_sceneView.autoenablesDefaultLighting = YES;
     
-//    _sceneView.autoenablesDefaultLighting = YES;
-    NSLog(@"add decks");
-#if 0
-    NSView *leftDeck = _leftDeckViewController.view;
-    [view addSubview:leftDeck];
+    _leftDeckViewController.view.layer.backgroundColor = [[NSColor redColor] CGColor];
+    _rightDeckViewController.view.layer.backgroundColor = [[NSColor blueColor] CGColor];
     
-    NSView *rightDeck = _rightDeckViewController.view;
-    [view addSubview:rightDeck];
-    
-    NSMutableArray *constraints = [NSMutableArray new];
-    
-    NSDictionary *metrics = @{};
-    NSDictionary *views = NSDictionaryOfVariableBindings(playfield, leftDeck, rightDeck);
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[playfield]-|" options:0 metrics:metrics views:views]];
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[playfield]" options:0 metrics:metrics views:views]];
-    
-    [constraints addObject:[NSLayoutConstraint constraintWithItem:playfield
-                                                        attribute:NSLayoutAttributeLeading
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:leftDeck
-                                                        attribute:NSLayoutAttributeLeading
-                                                       multiplier:1 constant:0]];
-     [constraints addObject:[NSLayoutConstraint constraintWithItem:playfield
-                                                         attribute:NSLayoutAttributeTrailing
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:rightDeck
-                                                         attribute:NSLayoutAttributeTrailing
-                                                        multiplier:1 constant:0]];
-    
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[playfield]-[leftDeck]-|" options:0 metrics:metrics views:views]];
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[playfield]-[rightDeck]-|" options:0 metrics:metrics views:views]];
-
-    [view addConstraints:constraints];
-    
-    [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
-    [view setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
-
-    [view layout];
-    
-    leftDeck.layer.backgroundColor = [[NSColor redColor] CGColor];
-    rightDeck.layer.backgroundColor = [[NSColor blueColor] CGColor];
-#endif
+    // Ensure these views are above the scene
+    [_leftDeckViewController.view.superview addSubview:_leftDeckViewController.view positioned:NSWindowAbove relativeTo:_sceneView];
+    [_rightDeckViewController.view.superview addSubview:_rightDeckViewController.view positioned:NSWindowAbove relativeTo:_sceneView];
     
     _playfieldNodeController.playfield = _game.playfield;
     
