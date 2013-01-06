@@ -9,15 +9,15 @@
 #import <AppKit/NSView.h>
 
 @protocol DeckViewDelegate;
-@class SquareView;
+@class DeckSlotView;
 
 @interface DeckView : NSView
 
 @property(nonatomic,weak) id <DeckViewDelegate> delegate;
 
-@property(nonatomic) NSUInteger squareCount;
-- (void)setImage:(NSImage *)image forSquareAtIndex:(NSUInteger)squareIndex;
+@property(nonatomic) NSUInteger deckSlotCount;
+- (void)setImage:(NSImage *)image forDeckSlotAtIndex:(NSUInteger)deckSlotIndex;
 
-- (NSUInteger)indexOfSquareView:(SquareView *)squareView;
+- (NSUInteger)indexOfDeckSlotView:(DeckSlotView *)deckSlotView;
 
 @end

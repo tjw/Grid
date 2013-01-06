@@ -1,5 +1,5 @@
 //
-//  SquareView.h
+//  DeckSlotView.h
 //  Grid
 //
 //  Created by Timothy J. Wood on 11/23/12.
@@ -8,9 +8,9 @@
 
 #import <AppKit/NSView.h>
 
-@protocol SquareViewDelegate;
+@protocol DeckSlotViewDelegate;
 
-@interface SquareView : NSView
-@property(nonatomic,weak) id <SquareViewDelegate> delegate;
+@interface DeckSlotView : NSView
+@property(nonatomic,weak) id <DeckSlotViewDelegate> delegate;
 @property(nonatomic) BOOL isDragDestination;
 @end

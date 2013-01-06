@@ -9,7 +9,7 @@
 #import "DeckViewController.h"
 
 #import "DeckView.h"
-#import "SquareView.h"
+#import "DeckSlotView.h"
 #import "DeckViewDelegate.h"
 #import "Deck.h"
 #import "PlayfieldNodeController.h"
@@ -46,10 +46,10 @@ static unsigned UnitContext;
         [self _setupView];
 }
 
-- (Unit *)unitForSquareView:(SquareView *)squareView;
+- (Unit *)unitForDeckSlotView:(DeckSlotView *)deckSlotView;
 {
     DeckView *deckView = (DeckView *)self.view;
-    NSUInteger slotIndex = [deckView indexOfSquareView:squareView];
+    NSUInteger slotIndex = [deckView indexOfDeckSlotView:deckSlotView];
     if (slotIndex == NSNotFound) {
         assert(0); // shouldn't be asking
         return nil;
@@ -89,7 +89,7 @@ static unsigned UnitContext;
 
 #pragma mark - DeckViewDelegate
 
-- (void)deckView:(DeckView *)deckView squareView:(SquareView *)squareView clicked:(NSEvent *)mouseDown;
+- (void)deckView:(DeckView *)deckView deckSlotView:(DeckSlotView *)deckSlotView clicked:(NSEvent *)mouseDown;
 {
     PlayfieldNodeController *playfieldController = _weak_playfieldController;
     if (!playfieldController) {
@@ -97,7 +97,7 @@ static unsigned UnitContext;
         return;
     }
     
-    [playfieldController dragUnitFromSquareView:squareView withEvent:mouseDown];
+    [playfieldController dragUnitFromDeckSlotView:deckSlotView withEvent:mouseDown];
 }
 
 #pragma mark - Private
@@ -108,7 +108,7 @@ static unsigned UnitContext;
     assert(_deck);
     
     DeckView *view = (DeckView *)self.view;
-    view.squareCount = [_deck.slots count];
+    view.deckSlotCount = [_deck.slots count];
     
     for (DeckSlot *slot in _deck.slots)
         [self _slotChanged:slot];
@@ -135,7 +135,7 @@ static unsigned UnitContext;
     NSUInteger slotIndex = [_deck.slots indexOfObject:slot];
     assert(slotIndex != NSNotFound);
 
-    [view setImage:[self _imageForUnit:unit] forSquareAtIndex:slotIndex];
+    [view setImage:[self _imageForUnit:unit] forDeckSlotAtIndex:slotIndex];
 }
 
 @end

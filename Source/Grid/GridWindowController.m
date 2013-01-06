@@ -13,7 +13,7 @@
 #import "Game.h"
 #import "Unit.h"
 #import "Parameters.h"
-#import "SquareView.h"
+#import "DeckSlotView.h"
 #import "Player.h"
 
 @interface GridWindowController () <SCNSceneRendererDelegate>
@@ -46,15 +46,15 @@
     _rightDeckViewController.deck = game.rightPlayer.deck;
 }
 
-- (void)userDraggedUnitFromDeckSquareView:(SquareView *)deckSquareView toPlayfieldSquareNode:(SquareNode *)playfieldSquareNode;
+- (void)userDraggedUnitFromDeckSlotView:(DeckSlotView *)deckSlotView toPlayfieldSquareNode:(SquareNode *)playfieldSquareNode;
 {
     // TODO: Check if the square is already filled
     // TODO: Check if the source square can be dragged from (or possibly do this in a 'will' hook)
     // TODO: Remove the unit from the deck
     // TODO: Animations
     
-    DeckViewController *deckController = [self deckControllerContainingSquareView:deckSquareView];
-    Unit *unit = [deckController unitForSquareView:deckSquareView];
+    DeckViewController *deckController = [self deckControllerContainingDeckSlotView:deckSlotView];
+    Unit *unit = [deckController unitForDeckSlotView:deckSlotView];
     
     [_playfieldNodeController placeUnit:unit inSquareNode:playfieldSquareNode];
 }
@@ -139,11 +139,11 @@
         [view exerciseAmbiguityInLayout];
 }
 
-- (DeckViewController *)deckControllerContainingSquareView:(SquareView *)squareView;
+- (DeckViewController *)deckControllerContainingDeckSlotView:(DeckSlotView *)deckSlotView;
 {
-    if ([squareView isDescendantOf:_leftDeckViewController.view])
+    if ([deckSlotView isDescendantOf:_leftDeckViewController.view])
         return _leftDeckViewController;
-    if ([squareView isDescendantOf:_rightDeckViewController.view])
+    if ([deckSlotView isDescendantOf:_rightDeckViewController.view])
         return _rightDeckViewController;
     
     assert(0); // Shouldn't be asking...

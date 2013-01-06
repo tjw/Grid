@@ -9,7 +9,7 @@
 #import "OUIViewController.h"
 
 @class Unit;
-@class SquareView;
+@class DeckSlotView;
 
 @class PlayfieldNodeController, Deck;
 
@@ -18,6 +18,6 @@
 @property(nonatomic,weak) PlayfieldNodeController *playfieldController;
 @property(nonatomic) Deck *deck;
 
-- (Unit *)unitForSquareView:(SquareView *)squareView;
+- (Unit *)unitForDeckSlotView:(DeckSlotView *)deckSlotView;
 
 @end

@@ -12,7 +12,7 @@
 #import "Playfield.h"
 #import "OATrackingLoop.h"
 #import "Parameters.h"
-#import "SquareView.h"
+#import "DeckSlotView.h"
 #import "SquareNode.h"
 #import "SCNView+Extensions.h"
 #import "ParticleSystem.h"
@@ -87,13 +87,13 @@ static NSString *_shaderSource(NSString *name)
 
 #pragma mark - API
 
-- (void)dragUnitFromSquareView:(SquareView *)sourceSquareView withEvent:(NSEvent *)mouseDown;
+- (void)dragUnitFromDeckSlotView:(DeckSlotView *)sourceDeckSlotView withEvent:(NSEvent *)mouseDown;
 {
     GridWindowController *wc = _weak_gridWindowController;
     NSView *parentView = wc.window.contentView;
     SCNView *sceneView = wc.sceneView;
         
-    NSRect originalSquareFrameInParentView = [parentView convertRect:sourceSquareView.bounds fromView:sourceSquareView];
+    NSRect originalSquareFrameInParentView = [parentView convertRect:sourceDeckSlotView.bounds fromView:sourceDeckSlotView];
     
     OATrackingLoop *trackingLoop = [parentView trackingLoopForMouseDown:mouseDown];
     trackingLoop.disablesAnimation = NO; // Without this, my layer-backed view doesn't update at all.
@@ -101,7 +101,7 @@ static NSString *_shaderSource(NSString *name)
     GridWindowController *gridWindowController = _weak_gridWindowController;
     assert(gridWindowController);
     
-    __block SquareView *draggingView;
+    __block DeckSlotView *draggingView;
     __block NSLayoutConstraint *xConstraint;
     __block NSLayoutConstraint *yConstraint;
     __block NSPoint initialPoint;
@@ -138,14 +138,14 @@ static NSString *_shaderSource(NSString *name)
             return;
         }
         
-        draggingView = [SquareView new];
+        draggingView = [DeckSlotView new];
         draggingView.translatesAutoresizingMaskIntoConstraints = NO;
         [draggingView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
         [draggingView setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
         [parentView addSubview:draggingView positioned:NSWindowAbove relativeTo:nil];
         
         draggingView.layer.backgroundColor = [[NSColor yellowColor] CGColor];
-        draggingView.layer.contents = sourceSquareView.layer.contents;
+        draggingView.layer.contents = sourceDeckSlotView.layer.contents;
         
         xConstraint = [NSLayoutConstraint constraintWithItem:draggingView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:parentView attribute:NSLayoutAttributeLeft multiplier:1 constant:0];
         yConstraint = [NSLayoutConstraint constraintWithItem:draggingView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:parentView attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
@@ -158,7 +158,7 @@ static NSString *_shaderSource(NSString *name)
     };
     trackingLoop.up = ^{
         if (destinationSquareNode) {
-            [gridWindowController userDraggedUnitFromDeckSquareView:sourceSquareView toPlayfieldSquareNode:destinationSquareNode];
+            [gridWindowController userDraggedUnitFromDeckSlotView:sourceDeckSlotView toPlayfieldSquareNode:destinationSquareNode];
 //            destinationSquareNode.isDragDestination = NO;
         }
         [draggingView removeFromSuperview];
@@ -398,39 +398,5 @@ static unsigned PlayfieldContext;
     material.program = _particleSystemProgram;
     node.geometry.materials = @[material];
 }
-
-#if 0
-
-// TODO: Still don't have an equivalent of this in SceneKit terms -- probably need to add an extra bounding volume node
-
-// Takes a point in the receivers coordinate system (unlike -hitTest:).
-- (SquareView *)squareViewNearestPoint:(NSPoint)point;
-{
-    SquareView *bestView;
-    CGFloat bestDistanceSquared = CGFLOAT_MAX;
-    
-    // Maybe put this in the callers.
-    if (!CGRectContainsPoint(self.bounds, point))
-        return nil;
-    
-    for (SquareView *candidateView in _squareViews) {
-        CGRect bounds = candidateView.frame;
-        if (CGRectContainsPoint(bounds, point))
-            return candidateView; // We assume non-overlapping candidates, so it isn't going to get better than this.
-        
-        CGPoint center = CGPointMake(NSMidX(bounds), NSMidY(bounds));
-        CGSize offset = CGSizeMake(point.x - center.x, point.y - center.y);
-        CGFloat distanceSquared = offset.width * offset.width + offset.height * offset.height;
-        
-        if (distanceSquared < bestDistanceSquared) {
-            bestDistanceSquared = distanceSquared;
-            bestView = candidateView;
-        }
-    }
-    
-    return bestView;
-}
-
-#endif
 
 @end

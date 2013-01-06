@@ -1,18 +1,18 @@
 //
-//  SquareView.m
+//  DeckSlotView.m
 //  Grid
 //
 //  Created by Timothy J. Wood on 11/23/12.
 //  Copyright (c) 2012 Cocoatoa. All rights reserved.
 //
 
-#import "SquareView.h"
+#import "DeckSlotView.h"
 
-#import "SquareViewDelegate.h"
+#import "DeckSlotViewDelegate.h"
 
-@implementation SquareView
+@implementation DeckSlotView
 
-static CGFloat SquareViewSize = 64;
+static CGFloat DeckSlotViewSize = 64;
 
 @synthesize delegate = _weak_delegate;
 
@@ -29,11 +29,11 @@ static CGFloat SquareViewSize = 64;
 
 - (void)mouseDown:(NSEvent *)theEvent;
 {
-    id <SquareViewDelegate> delegate = _weak_delegate;
+    id <DeckSlotViewDelegate> delegate = _weak_delegate;
     if (!delegate)
         return;
-    if ([delegate respondsToSelector:@selector(squareView:clicked:)])
-        [delegate squareView:self clicked:theEvent];
+    if ([delegate respondsToSelector:@selector(deckSlotView:clicked:)])
+        [delegate deckSlotView:self clicked:theEvent];
 }
 
 #pragma mark - NSView subclass
@@ -52,7 +52,7 @@ static CGFloat SquareViewSize = 64;
 
 - (CGSize)intrinsicContentSize;
 {
-    return CGSizeMake(SquareViewSize, SquareViewSize);
+    return CGSizeMake(DeckSlotViewSize, DeckSlotViewSize);
 }
 
 - (void)updateLayer;

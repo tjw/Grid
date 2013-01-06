@@ -8,69 +8,69 @@
 
 #import "DeckView.h"
 
-#import "SquareView.h"
-#import "SquareViewDelegate.h"
+#import "DeckSlotView.h"
+#import "DeckSlotViewDelegate.h"
 #import "DeckViewDelegate.h"
 
 static const CGFloat EdgeToPiecePadding = 8;
 
-@interface DeckView () <SquareViewDelegate>
-@property(nonatomic,readonly) NSArray *squareViews;
-@property(nonatomic,readonly) NSArray *squareViewConstraints;
+@interface DeckView () <DeckSlotViewDelegate>
+@property(nonatomic,readonly) NSArray *deckSlotViews;
+@property(nonatomic,readonly) NSArray *deckSlotViewConstraints;
 @end
 
 @implementation DeckView
 
 @synthesize delegate = _weak_delegate;
 
-- (NSUInteger)squareCount;
+- (NSUInteger)deckSlotCount;
 {
-    return [_squareViews count];
+    return [_deckSlotViews count];
 }
 
-- (void)setSquareCount:(NSUInteger)squareCount;
+- (void)setDeckSlotCount:(NSUInteger)deckSlotCount;
 {
-    if ([_squareViews count] == squareCount)
+    if ([_deckSlotViews count] == deckSlotCount)
         return;
         
-    if (_squareViewConstraints) {
-        [self removeConstraints:_squareViewConstraints];
-        _squareViewConstraints = nil;
+    if (_deckSlotViewConstraints) {
+        [self removeConstraints:_deckSlotViewConstraints];
+        _deckSlotViewConstraints = nil;
     }
     
-    NSMutableArray *squareViews = [NSMutableArray new];
-    for (NSUInteger squareIndex = 0; squareIndex < squareCount; squareIndex++) {
-        SquareView *square = [SquareView new];
-        square.translatesAutoresizingMaskIntoConstraints = NO;
-        [square setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
-        [square setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
+    NSMutableArray *deckSlotViews = [NSMutableArray new];
+    for (NSUInteger deckSlotIndex = 0; deckSlotIndex < deckSlotCount; deckSlotIndex++) {
+        DeckSlotView *slot = [DeckSlotView new];
+        slot.translatesAutoresizingMaskIntoConstraints = NO;
+        [slot setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationHorizontal];
+        [slot setContentHuggingPriority:NSLayoutPriorityDefaultHigh forOrientation:NSLayoutConstraintOrientationVertical];
         
-        square.delegate = self;
+        slot.delegate = self;
         
-        [self addSubview:square];
-        [squareViews addObject:square];
+        [self addSubview:slot];
+        [deckSlotViews addObject:slot];
     }
     
-    _squareViews = [squareViews copy];
+    _deckSlotViews = [deckSlotViews copy];
     
     [self setNeedsUpdateConstraints:YES];
 }
 
-- (void)setImage:(NSImage *)image forSquareAtIndex:(NSUInteger)squareIndex;
+- (void)setImage:(NSImage *)image forDeckSlotAtIndex:(NSUInteger)deckSlotIndex;
 {
-    assert(_squareViews);
+    assert(_deckSlotViews);
     
     // TODO: Bad, accessing its layer.
-    SquareView *squareView = _squareViews[squareIndex];
-    squareView.wantsLayer = YES; // otherwise we don't get our layer until later
-    squareView.layer.contents = image;
+    DeckSlotView *deckSlotView = _deckSlotViews[deckSlotIndex];
+    deckSlotView.wantsLayer = YES; // otherwise we don't get our layer until later
+    deckSlotView.layer.contents = image;
 }
 
-- (NSUInteger)indexOfSquareView:(SquareView *)squareView;
+- (NSUInteger)indexOfDeckSlotView:(DeckSlotView *)deckSlotView;
 {
-    assert(_squareViews);
+    assert(_deckSlotViews);
 
-    return [_squareViews indexOfObject:squareView];
+    return [_deckSlotViews indexOfObject:deckSlotView];
 }
 
 #pragma mark - NSView subclass
@@ -88,36 +88,36 @@ static const CGFloat EdgeToPiecePadding = 8;
     
     NSDictionary *metrics = @{@"padding" : @(EdgeToPiecePadding)};
 
-    SquareView *previousSquareView;
-    for (SquareView *squareView in _squareViews) {
+    DeckSlotView *previousDeckSlotView;
+    for (DeckSlotView *deckSlotView in _deckSlotViews) {
         NSDictionary *views;
-        if (previousSquareView == nil)
-            views = @{@"square": squareView};
+        if (previousDeckSlotView == nil)
+            views = @{@"slot": deckSlotView};
         else
-            views = @{@"square": squareView, @"previous": previousSquareView};
+            views = @{@"slot": deckSlotView, @"previous": previousDeckSlotView};
         
         
-        if (previousSquareView == nil)
-            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(padding)-[square]" options:0 metrics:metrics views:views]];
+        if (previousDeckSlotView == nil)
+            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(padding)-[slot]" options:0 metrics:metrics views:views]];
         else
-            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[previous]-(padding)-[square]" options:0 metrics:metrics views:views]];
+            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[previous]-(padding)-[slot]" options:0 metrics:metrics views:views]];
         
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(padding)-[square]-(padding)-|" options:0 metrics:metrics views:views]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(padding)-[slot]-(padding)-|" options:0 metrics:metrics views:views]];
         
-        previousSquareView = squareView;
+        previousDeckSlotView = deckSlotView;
     }
     
-    if (previousSquareView)
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[previousSquareView]-(padding)-|" options:0 metrics:metrics views:NSDictionaryOfVariableBindings(previousSquareView)]];
+    if (previousDeckSlotView)
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[previousDeckSlotView]-(padding)-|" options:0 metrics:metrics views:NSDictionaryOfVariableBindings(previousDeckSlotView)]];
 }
 
-#pragma mark - SquareViewDelegate
+#pragma mark - DeckSlotViewDelegate
 
-- (void)squareView:(SquareView *)_squareView clicked:(NSEvent *)mouseDown;
+- (void)deckSlotView:(DeckSlotView *)_deckSlotView clicked:(NSEvent *)mouseDown;
 {
     id <DeckViewDelegate> delegate = _weak_delegate;
     
-    [delegate deckView:self squareView:_squareView clicked:mouseDown];
+    [delegate deckView:self deckSlotView:_deckSlotView clicked:mouseDown];
 }
 
 @end

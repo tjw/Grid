@@ -6,8 +6,10 @@
 //  Copyright (c) 2012 Cocoatoa. All rights reserved.
 //
 
+@class DeckView, DeckSlotView;
+
 @protocol DeckViewDelegate <NSObject>
 
-- (void)deckView:(DeckView *)deckView squareView:(SquareView *)squareView clicked:(NSEvent *)mouseDown;
+- (void)deckView:(DeckView *)deckView deckSlotView:(DeckSlotView *)deckSlotView clicked:(NSEvent *)mouseDown;
 
 @end

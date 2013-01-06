@@ -9,7 +9,7 @@
 #import <AppKit/NSWindowController.h>
 
 @class Game;
-@class SquareView;
+@class DeckSlotView;
 @class SquareNode;
 
 @interface GridWindowController : NSWindowController
@@ -18,6 +18,6 @@
 
 @property(nonatomic,strong) Game *game;
 
-- (void)userDraggedUnitFromDeckSquareView:(SquareView *)deckSquareView toPlayfieldSquareNode:(SquareNode *)playfieldSquareNode;
+- (void)userDraggedUnitFromDeckSlotView:(DeckSlotView *)deckSlotView toPlayfieldSquareNode:(SquareNode *)playfieldSquareNode;
 
 @end

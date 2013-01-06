@@ -10,7 +10,7 @@
 
 @class GridWindowController;
 @class Playfield, Unit;
-@class SquareView;
+@class DeckSlotView;
 @class SquareNode;
 
 @interface PlayfieldNodeController : NodeController
@@ -18,7 +18,7 @@
 @property(nonatomic,weak) GridWindowController *gridWindowController;
 @property(nonatomic,strong) Playfield *playfield;
 
-- (void)dragUnitFromSquareView:(SquareView *)sourceSquareView withEvent:(NSEvent *)mouseDown;
+- (void)dragUnitFromDeckSlotView:(DeckSlotView *)sourceDeckSlotView withEvent:(NSEvent *)mouseDown;
 
 - (void)placeUnit:(Unit *)unit inSquareNode:(SquareNode *)squareNode;
 
