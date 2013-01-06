@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/NSObject.h>
+#import "Influence.h"
 
 @class Game, Unit;
+
 
 @interface Square : NSObject
 
@@ -18,7 +20,10 @@
 @property(nonatomic,readonly) NSUInteger row;
 
 @property(nonatomic) Unit *unit;
-@property(nonatomic) int32_t influence;
+
+@property(nonatomic,readonly) Influence influence;
+- (void)accumulateInfluenceAdjustment:(Influence)adjustInfluenceBy;
+- (void)applyInfluenceAdjustment;
 
 - (void)gameTick:(Game *)game;
 

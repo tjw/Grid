@@ -213,6 +213,27 @@ static NSString *_shaderSource(NSString *name)
     }
 }
 
+- (void)updateInfluence;
+{
+    for (SquareNode *node in _squareNodes) {
+        Square *square = [_playfield squareAtColumn:node.column row:node.row];
+        if (square.unit) {
+            // Assume the square is owned by this player
+            continue;
+        }
+
+        Influence influence = square.influence;
+        NSColor *squareColor;
+        if (influence > 0)
+            squareColor = [NSColor whiteColor];
+        else if (influence < 0)
+            squareColor = [NSColor blackColor];
+        else
+            squareColor = [NSColor grayColor];
+        node.geometry.firstMaterial.diffuse.contents = squareColor;
+    }
+}
+
 #pragma mark - NodeController subclass
 
 - (void)loadNode;
@@ -404,6 +425,15 @@ static unsigned SquareContext;
     SCNMaterial *material = [SCNMaterial material];
     material.program = _particleSystemProgram;
     node.geometry.materials = @[material];
+}
+
+// Could maybe integrate this with updating the particle system itself to reading state.
+- (void)_updateInfluenceBy:(int)delta forParticleSystem:(ParticleSystem *)particleSystem;
+{
+    uint16 vertexCount = particleSystem.activeParticles;
+    for (uint16 vertexIndex = 0; vertexIndex < vertexCount; vertexIndex++) {
+        
+    }
 }
 
 @end

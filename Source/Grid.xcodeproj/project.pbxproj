@@ -79,6 +79,7 @@
 		34AF66F9169818BC00E2C76F /* ParticleSystemNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticleSystemNode.m; sourceTree = "<group>"; };
 		34AF66FB16995C7100E2C76F /* DeckSlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckSlot.h; sourceTree = "<group>"; };
 		34AF66FC16995C7100E2C76F /* DeckSlot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeckSlot.m; sourceTree = "<group>"; };
+		34AF66FE169A011E00E2C76F /* Influence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Influence.h; sourceTree = "<group>"; };
 		34CF944416883D9800A940C0 /* DeckViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeckViewDelegate.h; sourceTree = "<group>"; };
 		34F08081166079D400F3FB85 /* GridWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridWindowController.h; sourceTree = "<group>"; };
 		34F08082166079D400F3FB85 /* GridWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridWindowController.m; sourceTree = "<group>"; };
@@ -256,6 +257,7 @@
 				34F080A91662A6BC00F3FB85 /* Game.m */,
 				34F080A51662A38100F3FB85 /* Playfield.h */,
 				34F080A61662A38100F3FB85 /* Playfield.m */,
+				34AF66FE169A011E00E2C76F /* Influence.h */,
 				34549DD616671FA300C94097 /* Square.h */,
 				34549DD716671FA300C94097 /* Square.m */,
 				34549DD216671F7800C94097 /* Unit.h */,

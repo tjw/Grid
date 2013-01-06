@@ -128,6 +128,7 @@
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
     
     [_playfieldNodeController updateParticleSystems];
+    [_playfieldNodeController updateInfluence];
 }
 
 #pragma mark - Private

@@ -3,12 +3,13 @@
 * Fix sometimes disappearing deck views
 * Add notion of players (unit.player)
 * Add influence (square.influence)
-* Adjust influence based off particles
 * Animate particles
+
+* Adjust influence based off particles
+* Draw influence as square color
 
 ## vN
 
-* Write model in server language
 * Add more piece types
 
 ## v.4

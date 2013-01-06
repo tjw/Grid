@@ -25,8 +25,12 @@
     
     _pauseCounter = 1; // Start paused
     _playfield = [Playfield new];
+
     _leftPlayer = [Player new];
+    _leftPlayer.influenceAdjustment = -1;
+    
     _rightPlayer = [Player new];
+    _rightPlayer.influenceAdjustment = 1;
     
     return self;
 }

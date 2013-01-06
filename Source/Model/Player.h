@@ -7,12 +7,14 @@
 //
 
 #import <Foundation/NSObject.h>
+#import "Influence.h"
 
 @class Deck, Game;
 
 @interface Player : NSObject
 
 @property(nonatomic,readonly) Deck *deck;
+@property(nonatomic) Influence influenceAdjustment;
 
 - (void)gameTick:(Game *)game;
 
